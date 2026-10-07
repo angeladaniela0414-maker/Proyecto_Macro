@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ULEAM - Generación de Horarios (Tema Claro)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --uleam-red: #e30613;
+      --uleam-red-hover: #c40510;
+      --uleam-blue: #003366;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-input: #f1f5f9;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --danger-bg: #fef2f2;
+      --danger-border: #fca5a5;
+      --danger-text: #dc2626;
+      --success-bg: #f0fdf4;
+      --success-text: #16a34a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* BARRA LATERAL */
+    .sidebar {
+      width: 240px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: var(--uleam-red);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .menu-list { list-style: none; margin-top: 20px; }
+    .menu-item { margin-bottom: 6px; }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .menu-link:hover, .menu-link.active {
+      background: rgba(227, 6, 19, 0.08);
+      color: var(--uleam-red);
+      border-left: 3px solid var(--uleam-red);
+    }
+
+    /* ÁREA DE TRABAJO MULTICOLUMNA */
+    .main-workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      overflow: hidden;
+    }
+
+    .matrix-area {
+      padding: 25px;
+      overflow-y: auto;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .tools-area {
+      padding: 20px;
+      background: #ffffff;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      background: var(--bg-card);
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    select {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      outline: none;
+      font-weight: 500;
+    }
+
+    /* MATRIZ DE HORARIO */
+    .schedule-grid {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .schedule-grid th, .schedule-grid td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      vertical-align: top;
+      height: 95px;
+    }
+
+    .schedule-grid th {
+      background: #f1f5f9;
+      color: var(--uleam-blue);
+      font-weight: 700;
+      height: auto;
+      padding: 12px;
+    }
+
+    /* TARJETAS DE CLASE EN CELDAS */
+    .slot-card {
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 8px;
+      text-align: left;
+      font-size: 11px;
+      color: #0369a1;
+      cursor: grab;
+    }
+
+    .slot-card.conflict {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .tag-room { background: #ffffff; color: #475569; border: 1px solid #cbd5e1; }
+    .tag-teacher { background: rgba(0, 51, 102, 0.1); color: var(--uleam-blue); }
+
+    /* PANALES LATERALES */
+    .panel-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .conflict-item {
+      background: var(--danger-bg);
+      border-left: 3px solid var(--danger-text);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      margin-bottom: 8px;
+      color: #7f1d1d;
+    }
+
+    .resource-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-generate {
+      width: 100%;
+      background: var(--uleam-red);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(227, 6, 19, 0.2);
+      transition: background 0.2s;
+    }
+
+    .btn-generate:hover {
+      background: var(--uleam-red-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA LATERAL -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <div class="brand-logo">U</div>
+        <div>
+          <h4 style="font-size: 14px; color: var(--uleam-blue);">ULEAM</h4>
+          <p style="font-size: 10px; color: var(--text-muted);">Gestión Académica</p>
+        </div>
+      </div>
+
+      <ul class="menu-list">
+        <li class="menu-item"><a href="#" class="menu-link active"><i class="fa-solid fa-sliders"></i> Generación Horarios</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-door-closed"></i> Gestión Salones</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-user-tie"></i> Consultar Docentes</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-book"></i> Asignaturas</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-file-export"></i> Exportar Reportes</a></li>
+      </ul>
+    </div>
+
+    <div style="font-size: 10px; color: var(--text-muted); text-align: center;">
+      Clase: Gestion_Academica
+    </div>
+  </aside>
+
+  <!-- ÁREA DE TRABAJO -->
+  <div class="main-workspace">
+    
+    <section class="matrix-area">
+      <header class="header-bar">
+        <div>
+          <h2 style="color: var(--uleam-blue);">Consola de Planificación de Horarios</h2>
+          <p style="font-size: 12px; color: var(--text-muted);">Asignación masiva y detección automática de choques</p>
+        </div>
+        <button class="btn-generate">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> ejecutar generarHorario()
+        </button>
+      </header>
+
+      <div class="filter-bar">
+        <div>
+          <label style="font-size: 10px; color: var(--text-muted); display: block; font-weight: bold;">Carrera</label>
+          <select><option>Ingeniería en Software</option></select>
+        </div>
+        <div>
+          <label style="font-size: 10px; color: var(--text-muted); display: block; font-weight: bold;">Nivel</label>
+          <select><option>4.º Nivel (Cuarto)</option></select>
+        </div>
+        <div>
+          <label style="font-size: 10px; color: var(--text-muted); display: block; font-weight: bold;">Paralelo</label>
+          <select><option>Paralelo A</option></select>
+        </div>
+        <div>
+          <label style="font-size: 10px; color: var(--text-muted); display: block; font-weight: bold;">Período Académico</label>
+          <select><option>2026-1</option></select>
+        </div>
+      </div>
+
+      <table class="schedule-grid">
+        <thead>
+          <tr>
+            <th style="width: 100px;">Hora</th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--uleam-blue); font-weight: bold;">08:00 - 10:00</td>
+            <td>
+              <div class="slot-card">
+                <strong>Prog. Orientada a Objetos</strong>
+                <div><span class="tag tag-teacher">Ing. Juan Pérez</span></div>
+                <div><span class="tag tag-room">Lab 1 - FCI</span></div>
+              </div>
+            </td>
+            <td>
+              <div class="slot-card conflict">
+                <strong>⚠️ CRUCE DETECTADO</strong>
+                <p style="font-size: 10px; margin-top: 2px;">Base de Datos Relacionales</p>
+                <div><span class="tag" style="background: rgba(220, 38, 38, 0.15); color: var(--danger-text);">Docente ocupado en 6° "B"</span></div>
+              </div>
+            </td>
+            <td>
+              <div class="slot-card">
+                <strong>Prog. Orientada a Objetos</strong>
+                <div><span class="tag tag-teacher">Ing. Juan Pérez</span></div>
+                <div><span class="tag tag-room">Lab 1 - FCI</span></div>
+              </div>
+            </td>
+            <td style="border: 2px dashed var(--border-color); background: #fdfdfd;">
+              <span style="font-size: 10px; color: var(--text-muted);">+ Arrastrar materia</span>
+            </td>
+            <td>
+              <div class="slot-card">
+                <strong>Sistemas Operativos</strong>
+                <div><span class="tag tag-teacher">Ing. Carlos Mora</span></div>
+                <div><span class="tag tag-room">Aula 204</span></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: var(--uleam-blue); font-weight: bold;">10:00 - 12:00</td>
+            <td>
+              <div class="slot-card">
+                <strong>Redes de Computadoras I</strong>
+                <div><span class="tag tag-teacher">Ing. Ana Rivas</span></div>
+                <div><span class="tag tag-room">Lab Redes</span></div>
+              </div>
+            </td>
+            <td style="border: 2px dashed var(--border-color); background: #fdfdfd;">
+              <span style="font-size: 10px; color: var(--text-muted);">+ Arrastrar materia</span>
+            </td>
+            <td>
+              <div class="slot-card">
+                <strong>Redes de Computadoras I</strong>
+                <div><span class="tag tag-teacher">Ing. Ana Rivas</span></div>
+                <div><span class="tag tag-room">Lab Redes</span></div>
+              </div>
+            </td>
+            <td>
+              <div class="slot-card conflict">
+                <strong>⚠️ SOBREOCUPACIÓN AULA</strong>
+                <p style="font-size: 10px;">Salón Lab 3 reservado por 2º "A"</p>
+              </div>
+            </td>
+            <td style="border: 2px dashed var(--border-color); background: #fdfdfd;">
+              <span style="font-size: 10px; color: var(--text-muted);">+ Arrastrar materia</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- HERRAMIENTAS LATERALES -->
+    <aside class="tools-area">
+      
+      <div class="panel-box" style="border-color: var(--danger-border); background: #fff5f5;">
+        <div class="panel-title" style="color: var(--danger-text);">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Conflictos Detectados (2)</span>
+        </div>
+
+        <div class="conflict-item">
+          <strong>Cruces de Docente:</strong>
+          <p style="margin-top: 2px;">Ing. María Mora asignada simultáneamente en 4° "A" y 6° "B" (Martes 08:00).</p>
+        </div>
+
+        <div class="conflict-item">
+          <strong>Conflicto de Salón:</strong>
+          <p style="margin-top: 2px;">Lab 3 reservado por dos niveles en el mismo bloque (Jueves 10:00).</p>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <div class="panel-title" style="color: var(--uleam-blue);">
+          <i class="fa-solid fa-door-open" style="color: var(--success-text);"></i>
+          <span>Salones Libres (Martes 08:00)</span>
+        </div>
+
+        <div class="resource-item">
+          <div>
+            <strong>Aula 102 (FCI)</strong>
+            <p style="font-size: 10px; color: var(--text-muted);">Capacidad: 40 estudiantes</p>
+          </div>
+          <span style="font-size: 9px; background: var(--success-bg); color: var(--success-text); padding: 3px 6px; border-radius: 4px; font-weight: bold;">Libre</span>
+        </div>
+
+        <div class="resource-item">
+          <div>
+            <strong>Laboratorio de Software 2</strong>
+            <p style="font-size: 10px; color: var(--text-muted);">Capacidad: 30 PCs</p>
+          </div>
+          <span style="font-size: 9px; background: var(--success-bg); color: var(--success-text); padding: 3px 6px; border-radius: 4px; font-weight: bold;">Libre</span>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <div class="panel-title" style="color: var(--uleam-blue);">
+          <i class="fa-solid fa-layer-group" style="color: #0284c7;"></i>
+          <span>Asignaturas Pendientes</span>
+        </div>
+
+        <div class="resource-item" style="border-left: 3px solid #0284c7;">
+          <div>
+            <strong>Ingeniería de Software II</strong>
+            <p style="font-size: 10px; color: var(--text-muted);">4 Horas semanales requeridas</p>
+          </div>
+          <i class="fa-solid fa-grip-vertical" style="color: var(--text-muted);"></i>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+</body>
+</html>
