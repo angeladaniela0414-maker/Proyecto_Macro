@@ -2,131 +2,115 @@ from abc import ABCMeta, abstractmethod
 
 #Creando la clase abstracta usuario
 class Usuario(metaclass=ABCMeta):
-    def __init__(self, usuario, password, identificacion):
-        self.usuario = usuario
-        self.password = password
-        self.id = identificacion
+    def __init__(self, id, correoInstitucional, password, nombre, apellido, carrera):
+        self.id = id
+        self.correoInstitucional = correoInstitucional
+        self._password = password
+        self.nombre = nombre
+        self.apellido = apellido
+        self.carrera = carrera
+        self.estadoSistema = False
 
 
     @abstractmethod
-    def iniciarSesion():
+    def iniciarSesion(self):
         pass
 
     @abstractmethod
-    def cerrarSesion():
+    def cerrarSesion(self):
+        pass
+
+    @abstractmethod
+    def mostrarMenu():
         pass
 
 
 #Creando las clases hijas de usuario
-class Administrador(Usuario):
-    def __init__(self, usuario, password, identificacion, nivelAcceso):
-        super().__init__(usuario, password, identificacion)
-        self.nivelAcceso = nivelAcceso
-
-    def soporteBaseDeDatos():
-        pass
-    
-    def gestionarUsuarios():
-        pass
-    
-    def asignarRoles():
-        pass
-    
-    def registrarDocente():
-        pass
-    
-    def modificarDocente():
-        pass
-    
-    def eliminarDocente():
-        pass
-    
-    def registrarEstudiante():
-        pass
-    
-    def eliminarEstudiante():
-        pass
-    
-    def modificarHorario():
-        pass
-
 
 class GestionAcademica(Usuario):
-    def __init__(self, usuario, password, identificacion, nombre, apellido, facultad, carrera, cargo):
-        super().__init__(usuario, password, identificacion)
+    def __init__(self, id, correoInstitucional, password, nombre, carrera, apellido, facultad,  cargo):
+        super().__init__(id, correoInstitucional, password, nombre, carrera, apellido)
 
-        self.nombre = nombre
-        self.apellido = apellido
         self.facultad = facultad
-        self.carrera = carrera
         self.cargo = cargo
 
-    def generarHorario():
+    def iniciarSesion(self):
         pass
 
-    def asignarHorario():
+    def cerrarSesion(self):
         pass
 
-    def consultarDocentes():
+    def generarHorario(self):
         pass
 
-    def consultarEstudiantes():
+    def asignarHorario(self):
         pass
 
-    def recuperarPassword():
+    def consultarDocentes(self):
+        pass
+
+    def consultarEstudiantes(self):
+        pass
+
+    def recuperarPassword(self):
         pass
 
 class Docente(Usuario):
-    def __init__(self, usuario, password, identificacion, cedula, nombre, apellido, especialidad, nivel, estado):
-        super().__init__(usuario, password, identificacion)
+    def __init__(self, id, correoInstitucional, password, nombre, apellido, carrera, cedula, especialidad, nivel, estado):
+        super().__init__(id, correoInstitucional, password, nombre, apellido, carrera)
         
         self.cedula = cedula
-        self.nombre = nombre
-        self.apellido = apellido
         self.especialidad = especialidad
         self.nivel = nivel
         self.estado = estado
         self.asignaturas = []
 
-    def recuperarPassword():
+    def iniciarSesion(self):
         pass
 
-    def mostrarHorario():
+    def cerrarSesion(self):
         pass
 
-    def verTutorias():
+    def recuperarPassword(self):
         pass
 
-    def consultarEstudiantes():
+    def mostrarHorario(self):
         pass
 
-    def filtrarAsignatura():
+    def verTutorias(self):
+        pass
+
+    def consultarEstudiantes(self):
+        pass
+
+    def filtrarAsignatura(self):
         pass
 
 class Estudiante(Usuario):
-    def __init__(self, usuario, password, identificacion, correoInstitucional, nombre, apellido, curso, carrera, nivel):
-        super().__init__(usuario, password, identificacion)
+    def __init__(self, id, correoInstitucional, password, nombre, apellido, curso, carrera, nivel):
+        super().__init__(id, correoInstitucional, password, nombre, apellido, carrera)
 
-        self.correoInstitucional = correoInstitucional
-        self.nombre = nombre
-        self.apellido = apellido
         self.curso = curso
-        self.carrera =carrera
         self.nivel = nivel
         self.asignaturas = []
 
-    def verTutorias():
+    def iniciarSesion(self):
         pass
 
-    def filtrarParalelo():
+    def cerrarSesion(self):
         pass
 
-    def filtrarNivel():
+    def verTutorias(self):
         pass
 
-    def mostrarHorario():
+    def filtrarParalelo(self):
         pass
 
-    def recuperarPassword():
+    def filtrarNivel(self):
         pass
 
+    def mostrarHorario(self):
+        pass
+
+    def recuperarPassword(self):
+        pass
