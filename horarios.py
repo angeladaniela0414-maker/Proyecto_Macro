@@ -1,6 +1,15 @@
 from abc import ABCMeta
 from abc import abstractmethod
 
+class Paralelo:
+    def __init__(self, asignatura, profesor, semestre, paralelo):
+        self.asignatura = asignatura
+        self.profesor = profesor
+        self.semestre = semestre
+        self.paralelo = paralelo
+    def __str__(self):
+        return f"{self.asignatura} - Semestre {self.semestre} - Paralelo {self.paralelo}"
+
 class Asignatura:
     def __init__(self, id_asignatura, nombre, semestre):
         self.id_asignatura = id_asignatura
@@ -17,9 +26,6 @@ class Salon:
         self.capacidad = capacidad
         self.tipo_salon = tipo_salon
         self.disponibilidad = disponibilidad
-
-    def __str__(self):
-        return f"{self.nombre} ({self.tipo_salon}, capacidad {self.capacidad})"
 
 class Bloque_horario:
     def __init__(self, dia, hora_inicio, hora_fin, salon, asignatura, profesor, paralelo):
@@ -41,13 +47,6 @@ class Bloque_horario:
         )
 
         return mismo_dia and horas_cruzadas
-
-    def tiene_conflicto_con(self, otro):
-        return self.se_cruza_con(otro) and (
-            self.profesor == otro.profesor
-            or self.paralelo == otro.paralelo
-            or self.salon.id_salon == otro.salon.id_salon
-        )
 
     def __str__(self):
         return (
@@ -76,8 +75,26 @@ class Horario(metaclass=ABCMeta):
         return True
 
     def existe_conflicto(self, nuevo, existente):
-        return nuevo.tiene_conflicto_con(existente)
+        if not nuevo.se_cruza_con(existente):
+            return False
 
+        mismo_profesor = (
+            nuevo.profesor == existente.profesor
+        )
+        mismo_paralelo = (
+            nuevo.paralelo == existente.paralelo
+        )
+        mismo_salon = (
+            nuevo.salon.id_salon == existente.salon.id_salon
+        )
+
+        return (
+            mismo_profesor
+            or mismo_paralelo
+            or mismo_salon
+        )
+
+    
 
     @abstractmethod
     def consultar_horario(self):
@@ -115,7 +132,7 @@ class Horario_estudiante(Horario):
 
     def consultar_horario(self):
         for bloque in self.bloques:
-            if bloque.paralelo == self.estudiante:
+            if bloque.paralelo == self.paralelo:
                 print(bloque)
 
 
@@ -136,11 +153,11 @@ class Horario_catedra(Horario_estudiante, Horario_profesor):
         )
 
     def consultar_horario(self):
-        return [
-            b for b in self.bloques
-            if b.profesor == self.profesor
-            and b.paralelo == self.estudiante
-        ]
+
+        for bloque in self.bloques:
+            if bloque.paralelo == self.estudiante and bloque.profesor == self.profesor:
+                print(bloque)
+
     
 class Horario_salon(Horario):
     def __init__(self, id_horario, periodo_academico, salon):

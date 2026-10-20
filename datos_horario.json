@@ -1,84 +1,24 @@
 {
   "periodo_academico": "2026-2027",
-  "asignaturas": [
-    {
-      "id_asignatura": 1,
-      "nombre": "Programacion",
-      "semestre": 3
-    },
-    {
-      "id_asignatura": 2,
-      "nombre": "Base de Datos",
-      "semestre": 3
-    },
-    {
-      "id_asignatura": 3,
-      "nombre": "Redes de Computadoras",
-      "semestre": 3
-    }
-  ],
   "profesores": [
-    {
-      "id_profesor": 1,
-      "nombre": "Profesor A"
-    },
-    {
-      "id_profesor": 2,
-      "nombre": "Profesor B"
-    }
+    {"id_profesor": 1, "nombre": "Profesor A"},
+    {"id_profesor": 2, "nombre": "Profesor B"}
   ],
   "paralelos": [
-    {
-      "id_paralelo": 1,
-      "nombre": "3A",
-      "semestre": 3
-    }
+    {"id_paralelo": 1, "nombre": "3A", "asignatura": "Base de datos"}
+  ],
+  "asignaturas": [
+    {"id_asignatura": 1, "nombre": "Programación", "semestre": 3},
+    {"id_asignatura": 2, "nombre": "Base de Datos", "semestre": 3},
+    {"id_asignatura": 3, "nombre": "Redes de Computadoras", "semestre": 3}
   ],
   "salones": [
-    {
-      "id_salon": 1,
-      "nombre": "Laboratorio 1",
-      "capacidad": 30,
-      "tipo_salon": "Laboratorio",
-      "disponibilidad": true
-    },
-    {
-      "id_salon": 2,
-      "nombre": "Aula 2",
-      "capacidad": 40,
-      "tipo_salon": "Aula",
-      "disponibilidad": true
-    }
+    {"id_salon": 1, "nombre": "Laboratorio 1", "capacidad": 30, "tipo_salon": "Laboratorio", "disponibilidad": true},
+    {"id_salon": 2, "nombre": "Aula 2", "capacidad": 40, "tipo_salon": "Aula", "disponibilidad": true}
   ],
-  "horarios": [
-    {
-      "id_horario": 1,
-      "tipo": "catedra",
-      "id_profesor": 1,
-      "id_paralelo": 1,
-      "bloques": [
-        {
-          "dia": "Lunes",
-          "hora_inicio": "08:00",
-          "hora_fin": "10:00",
-          "id_asignatura": 1,
-          "id_salon": 1
-        },
-        {
-          "dia": "Martes",
-          "hora_inicio": "10:00",
-          "hora_fin": "12:00",
-          "id_asignatura": 2,
-          "id_salon": 2
-        },
-        {
-          "dia": "Miercoles",
-          "hora_inicio": "08:00",
-          "hora_fin": "10:00",
-          "id_asignatura": 3,
-          "id_salon": 1
-        }
-      ]
-    }
+  "bloques": [
+    {"dia": "Lunes", "hora_inicio": "08:00", "hora_fin": "10:00", "id_asignatura": 1, "id_salon": 1, "profesor": "Profesor A", "paralelo": "3A"},
+    {"dia": "Martes", "hora_inicio": "10:00", "hora_fin": "12:00", "id_asignatura": 2, "id_salon": 2, "profesor": "Profesor A", "paralelo": "3A"},
+    {"dia": "Miércoles", "hora_inicio": "08:00", "hora_fin": "10:00", "id_asignatura": 3, "id_salon": 1, "profesor": "Profesor A", "paralelo": "3A"}
   ]
 }
