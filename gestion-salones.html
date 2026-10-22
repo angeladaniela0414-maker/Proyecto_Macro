@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salones · ULEAM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/portal.css">
+  <link rel="stylesheet" href="css/horario.css">
+  <link rel="stylesheet" href="css/impresion.css" media="print">
+</head>
+<body data-rol="gestion">
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo"><img src="img/logo-uleam.jpg" alt="Logo ULEAM"></div><div><h3>ULEAM</h3><p>Gestión académica</p></div></div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li><a href="gestion-inicio.html" class="menu-enlace"><i class="fa-solid fa-house"></i> Inicio</a></li>
+          <li><a href="gestion-generar.html" class="menu-enlace"><i class="fa-solid fa-wand-magic-sparkles"></i> Generar horarios</a></li>
+          <li><a href="gestion-consulta.html" class="menu-enlace"><i class="fa-solid fa-table-cells"></i> Consultar horarios</a></li>
+          <li><a href="gestion-docentes.html" class="menu-enlace"><i class="fa-solid fa-user-tie"></i> Docentes</a></li>
+          <li><a href="gestion-estudiantes.html" class="menu-enlace"><i class="fa-solid fa-user-graduate"></i> Estudiantes</a></li>
+          <li><a href="gestion-salones.html" class="menu-enlace activo"><i class="fa-solid fa-door-open"></i> Salones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <button type="button" class="menu-enlace" data-salir><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar" data-usuario-inicial>U</span>
+        <div><strong data-usuario-nombre>Usuario</strong><small>Gestión académica</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      <div id="mensajes"></div>
+      <div class="cabecera">
+        <div><h1>Salones</h1><p>Capacidad, tipo y disponibilidad (consulta)</p></div>
+        <div class="acciones">
+          <select id="filtroTipo" aria-label="Tipo de salón">
+            <option value="">Todos los tipos</option><option>Aula</option><option>Laboratorio</option><option>Auditorio</option>
+          </select>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-clock"></i> ¿Qué salones están libres?</span></h3>
+        <form id="formLibres" class="filtros">
+          <label>Día<select name="dia"><option value="1">Lunes</option><option value="2">Martes</option><option value="3">Miércoles</option><option value="4">Jueves</option><option value="5">Viernes</option></select></label>
+          <label>Desde<input type="time" name="inicio" value="08:00" required></label>
+          <label>Hasta<input type="time" name="fin" value="10:00" required></label>
+          <button class="btn btn-primario" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+        </form>
+        <div class="alerta alerta-error" id="errorLibres" style="margin-top:12px" hidden></div>
+        <div id="resultadoLibres"></div>
+      </div>
+      <div class="tarjeta"><div class="tabla-caja">
+        <table class="tabla">
+          <thead><tr><th>Salón</th><th>Tipo</th><th>Capacidad</th><th>Estado ahora</th></tr></thead>
+          <tbody id="tablaSalones"></tbody>
+        </table>
+        <div class="vacio" id="sinSalones" hidden><i class="fa-regular fa-building"></i>No hay salones cargados.</div>
+      </div></div>
+    </main>
+  </div>
+</div>
+<script src="js/datos.js"></script>
+<script src="js/sesion.js"></script>
+<script src="js/app.js"></script>
+<script src="js/horarios.js"></script>
+<script src="js/salones.js"></script>
+</body>
+</html>
