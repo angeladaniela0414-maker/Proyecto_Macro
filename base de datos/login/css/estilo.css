@@ -1,0 +1,351 @@
+/* ==========================================================================
+   Variables de Color y Tipografía Académica
+   ========================================================================== */
+:root {
+    /* Paleta Institucional */
+    --primary-red: #9B111E;        /* Rojo borgoña / granate universitario */
+    --primary-hover: #7A0D17;
+    --navy-blue: #1C3144;          /* Azul académico para encabezados */
+    --accent-blue: #0056B3;        /* Azul para enlaces e interactividad */
+    
+    /* Neutrales de Fondo y Superficie */
+    --bg-main: #F4F6F8;            /* Fondo gris claro limpio */
+    --bg-card: #FFFFFF;            /* Contenedores y cartas blancas */
+    --bg-sidebar: #1A2530;         /* Azul oscuro formal para barra lateral */
+    
+    /* Tipografía y Bordes */
+    --text-primary: #2B2D42;       /* Texto oscuro legible */
+    --text-muted: #5A6578;         /* Texto secundario */
+    --text-light: #FFFFFF;         /* Texto sobre fondos oscuros */
+    --border-color: #DDE2E5;       /* Líneas de división sutiles */
+    --border-accent: #C5D0D8;
+    
+    /* Estados y Alertas */
+    --warning-bg: #FFF3CD;
+    --warning-border: #FFEEBA;
+    --warning-text: #856404;
+    --danger-bg: #F8D7DA;
+    --danger-border: #F5C6CB;
+    --danger-text: #721C24;
+}
+
+/* ==========================================================================
+   Reset General y Tipografía
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   Layout Principal (Dashboard Académico)
+   ========================================================================== */
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar Institucional */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-icon {
+    background-color: var(--primary-red);
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 8px 14px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.brand-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.brand-header small {
+    color: #A0AEC0;
+    font-size: 0.8rem;
+}
+
+/* Menú de Navegación */
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 12px;
+    gap: 4px;
+}
+
+.nav-item {
+    color: #CBD5E0;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-light);
+}
+
+.nav-item.active {
+    background-color: var(--primary-red);
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Área de Contenido */
+.content-area {
+    flex-grow: 1;
+    padding: 32px 40px;
+    overflow-y: auto;
+    background-color: var(--bg-main);
+}
+
+/* Encabezados Académicos */
+.header-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.header-action h1 {
+    font-size: 1.6rem;
+    color: var(--navy-blue);
+    font-weight: 700;
+}
+
+.header-action p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   Controles y Filtros
+   ========================================================================== */
+.filters-bar {
+    display: flex;
+    gap: 16px;
+    background-color: var(--bg-card);
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.filters-bar select {
+    padding: 8px 12px;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.filters-bar select:focus {
+    border-color: var(--accent-blue);
+}
+
+/* Botón de Acción Principal */
+.btn-danger {
+    background-color: var(--primary-red);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   Tabla de Horarios Institucional
+   ========================================================================== */
+.grid-layout {
+    background-color: var(--bg-card);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-card);
+}
+
+.schedule-table th {
+    background-color: #EBF0F5;
+    color: var(--navy-blue);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding: 14px 12px;
+    border: 1px solid var(--border-accent);
+}
+
+.schedule-table td {
+    border: 1px solid var(--border-color);
+    padding: 16px 12px;
+    text-align: center;
+    vertical-align: top;
+    height: 90px;
+    font-size: 0.88rem;
+}
+
+/* Tarjetas de Clases/Eventos dentro de la tabla */
+.class-card {
+    background-color: #EBF3FA;
+    border-left: 4px solid var(--accent-blue);
+    padding: 8px;
+    border-radius: 3px;
+    text-align: left;
+}
+
+.class-card strong {
+    display: block;
+    color: var(--navy-blue);
+}
+
+.class-card span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Tarjeta de Conflicto/Cruces */
+.conflict-card {
+    background-color: var(--danger-bg);
+    border-left: 4px solid var(--primary-red);
+    color: var(--danger-text);
+    padding: 8px;
+    border-radius: 3px;
+    text-align: left;
+    font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   Pantalla de Login Limpia y Formal
+   ========================================================================== */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #EBF0F5;
+}
+
+.login-card {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 8px;
+    width: 380px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.login-card .brand {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-card h2 {
+    color: var(--navy-blue);
+    margin-top: 10px;
+    font-size: 1.4rem;
+}
+
+.login-card p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy-blue);
+    margin-bottom: 6px;
+}
+
+.input-group input {
+    padding: 10px 12px;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.15);
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: var(--navy-blue);
+    color: var(--text-light);
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #122230;
+}
+
+.error-msg {
+    color: var(--primary-red);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    text-align: center;
+}

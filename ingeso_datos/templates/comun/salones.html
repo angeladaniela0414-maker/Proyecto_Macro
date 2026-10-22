@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Consulta de salones{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Consulta de salones</h1><p>Capacidad, tipo y disponibilidad en este momento</p></div>
+  <form method="get" class="acciones">
+    <select name="tipo" onchange="this.form.submit()" aria-label="Tipo de salón">
+      <option value="">Todos los tipos</option>
+      {% for t in ['Aula', 'Laboratorio', 'Auditorio'] %}<option {{ 'selected' if tipo == t }}>{{ t }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+
+<div class="tarjeta">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-clock"></i> ¿Qué salones están libres?</span></h3>
+  <form id="formLibres" class="filtros" data-api="{{ url_for('comun.api_salones_libres') }}">
+    <label>Día<select name="dia">{% for n, d in dias.items() %}<option value="{{ n }}">{{ d }}</option>{% endfor %}</select></label>
+    <label>Desde<input type="time" name="inicio" value="08:00" required></label>
+    <label>Hasta<input type="time" name="fin" value="10:00" required></label>
+    <button class="btn btn-primario" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+  </form>
+  <div id="resultadoLibres"></div>
+</div>
+
+<div class="tarjeta">
+  <div class="tabla-caja">
+    <table class="tabla">
+      <thead><tr><th>Salón</th><th>Tipo</th><th>Capacidad</th><th>Estado ahora</th></tr></thead>
+      <tbody>
+        {% for s in salones %}
+        <tr class="filtrable">
+          <td><strong>{{ s.nombre }}</strong></td><td>{{ s.tipoSalon }}</td><td>{{ s.capacidad }} personas</td>
+          <td>
+            {% if s.estado == 'Mantenimiento' %}<span class="etiqueta aviso">En mantenimiento</span>
+            {% elif s.ocupado %}<span class="etiqueta peligro">Ocupado</span>
+            {% else %}<span class="etiqueta ok">Libre</span>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if not salones %}{{ vacio('fa-building', 'No hay salones registrados.') }}{% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/salones.js') }}"></script>{% endblock %}

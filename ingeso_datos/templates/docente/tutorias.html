@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Tutorías{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Tutorías</h1><p>Programa tutorías y revisa quién se inscribió</p></div>
+  <div class="acciones"><button class="btn btn-primario" data-abrir-modal="modalTutoria"><i class="fa-solid fa-plus"></i> Nueva tutoría</button></div>
+</div>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Tutoría</th><th>Fecha</th><th>Horario</th><th>Asignatura</th><th>Salón</th><th>Cupos</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+    {% for t in tutorias %}
+      <tr class="filtrable">
+        <td><strong>{{ t.nombre }}</strong></td><td>{{ t.fecha|fecha_es }}</td><td>{{ t.horaInicio }} - {{ t.horaFin }}</td>
+        <td>{{ t.asignatura or '—' }}</td><td>{{ t.salon or '—' }}</td><td>{{ t.ocupados }}/{{ t.cupo }}</td>
+        <td><span class="etiqueta {{ 'ok' if t.estado == 'Programada' else 'peligro' }}">{{ t.estado }}</span></td>
+        <td><div class="fila-botones">
+          <button class="btn btn-chico" data-solicitantes data-nombre="{{ t.nombre }}" data-url="{{ url_for('docente.solicitantes', id_tut=t.id) }}"><i class="fa-solid fa-users"></i> Inscritos</button>
+          {% if t.estado == 'Programada' %}
+          <form method="post" action="{{ url_for('docente.cancelar', id_tut=t.id) }}" data-confirmar="¿Cancelar esta tutoría? Se anularán las solicitudes de los estudiantes.">
+            {{ csrf_campo() }}<button class="btn btn-chico btn-peligro" type="submit">Cancelar</button></form>
+          {% endif %}</div></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if not tutorias %}{{ vacio('fa-calendar', 'Aún no programaste tutorías.') }}{% endif %}
+</div></div>
+
+<div class="modal" id="modalTutoria" hidden>
+  <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="tNueva">
+    <div class="modal-cab"><h2 id="tNueva">Nueva tutoría</h2><button class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button></div>
+    <form method="post" class="formulario">
+      {{ csrf_campo() }}
+      <label class="completo">Nombre<input type="text" name="nombre" maxlength="120" required placeholder="Ej.: Refuerzo de consultas SQL"></label>
+      <label>Fecha<input type="date" name="fecha" min="{{ hoy }}" required></label>
+      <label>Cupo<input type="number" name="cupo" min="1" max="200" value="10" required></label>
+      <label>Hora de inicio<input type="time" name="horaInicio" required></label>
+      <label>Hora de fin<input type="time" name="horaFin" required></label>
+      <label>Asignatura<select name="asignatura"><option value="">Sin asignatura</option>
+        {% for a in asignaturas %}<option value="{{ a.id }}">N{{ a.nivel }} · {{ a.nombre }}</option>{% endfor %}</select></label>
+      <label>Salón<select name="salon"><option value="">Por definir</option>
+        {% for s in salones %}<option value="{{ s.id }}">{{ s.nombre }} ({{ s.capacidad }})</option>{% endfor %}</select></label>
+      <div class="completo modal-acciones"><button type="button" class="btn" data-cerrar>Cancelar</button><button class="btn btn-primario" type="submit">Programar</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="modalSolicitantes" hidden>
+  <div class="modal-caja" role="dialog" aria-modal="true">
+    <div class="modal-cab"><h2 id="tituloSolicitantes">Inscritos</h2><button class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button></div>
+    <div class="tabla-caja"><table class="tabla"><thead><tr><th>Estudiante</th><th>Correo</th><th>Nivel</th><th>Paralelo</th></tr></thead>
+      <tbody id="cuerpoSolicitantes"></tbody></table></div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/tutorias.js') }}"></script>{% endblock %}

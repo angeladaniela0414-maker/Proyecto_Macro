@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Mis tutorías{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Mis tutorías</h1><p>Solicita cupo en las tutorías de las asignaturas de tu carrera</p></div></div>
+
+<div class="dos-columnas">
+  <div class="tarjeta">
+    <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-chalkboard-user"></i> Tutorías disponibles</span></h3>
+    {% for t in disponibles %}
+    <div class="item filtrable">
+      <div>
+        <h4>{{ t.nombre }}</h4>
+        <p>{{ t.fecha|fecha_larga }}, {{ t.horaInicio }} - {{ t.horaFin }} · {{ t.docente }}{% if t.asignatura %} · {{ t.asignatura }}{% endif %}{% if t.salon %} · {{ t.salon }}{% endif %}</p>
+        <p>Cupos: {{ t.cupo - t.ocupados }} de {{ t.cupo }}</p>
+      </div>
+      <form method="post" action="{{ url_for('estudiante.cancelar' if t.solicitada else 'estudiante.solicitar', id_tut=t.id) }}">
+        {{ csrf_campo() }}
+        {% if t.solicitada %}<button class="btn btn-chico btn-peligro" type="submit">Cancelar</button>
+        {% elif t.ocupados >= t.cupo %}<span class="etiqueta aviso">Sin cupos</span>
+        {% else %}<button class="btn btn-chico btn-primario" type="submit">Solicitar</button>{% endif %}
+      </form>
+    </div>
+    {% else %}{{ vacio('fa-calendar', 'No hay tutorías programadas por ahora.') }}{% endfor %}
+  </div>
+  <div class="tarjeta">
+    <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-circle-check"></i> Solicitadas por mí</span></h3>
+    {% for t in solicitadas %}
+    <div class="evento"><h4>{{ t.nombre }}</h4>
+      <p><i class="fa-regular fa-calendar"></i> {{ t.fecha|fecha_larga }}, {{ t.horaInicio }} - {{ t.horaFin }}</p>
+      <p>{{ t.docente }}{% if t.salon %} · {{ t.salon }}{% endif %}</p></div>
+    {% else %}{{ vacio('fa-calendar-check', 'Aún no solicitaste tutorías.') }}{% endfor %}
+  </div>
+</div>
+{% endblock %}

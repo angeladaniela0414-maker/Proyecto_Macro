@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ULEAM - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body class="login-body">
+    <div class="login-card">
+        <div class="brand">
+            <span class="logo-icon">U</span>
+            <h2>ULEAM</h2>
+            <p>Gestión Académica</p>
+        </div>
+        <form id="form-login">
+            <div class="input-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" required placeholder="Ingresa tu usuario">
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-primary">Ingresar al Sistema</button>
+            <p id="mensaje-error" class="error-msg"></p>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='base/login.js') }}"></script>
+</body>
+</html>

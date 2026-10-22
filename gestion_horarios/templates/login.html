@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso · Portal ULEAM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body class="pagina-login">
+  <main class="login-tarjeta">
+    <div class="logo">U</div>
+    <h1>Portal ULEAM</h1>
+    <p class="subtitulo">Ingresa tus credenciales para acceder a la gestión académica</p>
+
+    {% if error %}<div class="alerta alerta-error" role="alert">{{ error }}</div>{% endif %}
+
+    <form id="formLogin" method="post" action="{{ url_for('auth.login') }}">
+      {{ csrf_campo() }}
+      <input type="hidden" name="siguiente" value="{{ siguiente }}">
+      <div class="campo-icono">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" name="correo" placeholder="Correo institucional" autocomplete="username"
+               value="{{ correo }}" required {{ 'autofocus' if not correo }} aria-label="Correo institucional">
+      </div>
+      <div class="campo-icono">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" name="clave" id="clave" placeholder="Contraseña" autocomplete="current-password"
+               required {{ 'autofocus' if correo }} aria-label="Contraseña">
+        <button type="button" class="ojo" id="verClave" aria-label="Mostrar contraseña"><i class="fa-regular fa-eye"></i></button>
+      </div>
+      <div class="opciones">
+        <label><input type="checkbox" name="recordar"> Recordarme</label>
+        <a href="#" data-abrir-recuperar>¿Olvidaste tu clave?</a>
+      </div>
+      <button type="submit" class="btn-ingresar"><span>Iniciar sesión</span><i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+
+    <p class="pie">¿Problemas de acceso? <a href="#" data-abrir-recuperar>Pedir ayuda</a></p>
+  </main>
+
+  <div class="modal" id="modalRecuperar" hidden>
+    <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="tituloRecuperar">
+      <h2 id="tituloRecuperar">Recuperar acceso</h2>
+      <p>Escribe tu correo institucional. Gestión Académica recibirá la solicitud y te entregará una clave temporal.</p>
+      <div class="msg-modal" id="msgRecuperar" hidden></div>
+      <form id="formRecuperar" method="post" action="{{ url_for('auth.recuperar') }}">
+        {{ csrf_campo() }}
+        <div class="campo-icono">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" name="correo" id="correoRecuperar" placeholder="Correo institucional" required aria-label="Correo institucional">
+        </div>
+        <div class="modal-acciones">
+          <button type="button" class="btn-sec" data-cerrar>Cerrar</button>
+          <button type="submit" class="btn-prim">Enviar solicitud</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

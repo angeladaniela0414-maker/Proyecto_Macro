@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import filtros_horario %}
+{% block titulo %}Mi horario{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Mi horario semanal</h1><p>Período {{ periodo.nombre if periodo else '—' }} · Cambia los filtros para consultar otros horarios</p></div>
+  <div class="acciones"><button class="btn btn-primario" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> Descargar PDF</button></div>
+</div>
+{{ filtros_horario(cat, 'horarioApp', ['carrera', 'nivel', 'paralelo'], sel) }}
+<div class="tarjeta">
+  <div class="solo-impresion"><h1>Horario semanal · ULEAM</h1><p>{{ perfil.nombre }} {{ perfil.apellido }} · {{ perfil.carrera }}</p></div>
+  <div class="horario-app" id="horarioApp" data-api="{{ url_for('comun.api_horario') }}" data-fijos="{}"></div>
+</div>
+<p class="suave no-imprimir" style="font-size:12px">«Descargar PDF» abre el cuadro de impresión: elige «Guardar como PDF» como destino.</p>
+{% endblock %}

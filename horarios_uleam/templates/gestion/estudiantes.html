@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Estudiantes{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Estudiantes</h1><p>Consulta por carrera, nivel y paralelo · hasta 500 registros</p></div></div>
+<form method="get" action="/gestion/estudiantes" class="filtros">
+  <label>Carrera<select name="carrera" data-auto><option value="">Todas</option>
+    {% for c in cat.carreras %}<option value="{{ c.id }}" {{ 'selected' if f.carrera == c.id }}>{{ c.nombre }}</option>{% endfor %}</select></label>
+  <label>Nivel<select name="nivel" data-auto><option value="">Todos</option>
+    {% for n in cat.niveles %}<option value="{{ n.nivel }}" {{ 'selected' if f.nivel == n.nivel }}>Nivel {{ n.nivel }}</option>{% endfor %}</select></label>
+  <label>Paralelo<select name="paralelo" data-auto><option value="">Todos</option>
+    {% for p in cat.paralelos %}<option value="{{ p.p }}" {{ 'selected' if f.paralelo == p.p }}>Paralelo {{ p.p }}</option>{% endfor %}</select></label>
+  <a class="btn" href="/gestion/estudiantes"><i class="fa-solid fa-rotate-left"></i> Limpiar</a>
+</form>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Nivel</th><th>Paralelo</th><th></th></tr></thead>
+    <tbody>
+      {% for e in lista %}
+      <tr class="filtrable"><td><strong>{{ e.apellido }} {{ e.nombre }}</strong></td><td>{{ e.correo }}</td><td>{{ e.carrera }}</td><td>{{ e.nivel }}</td><td>{{ e.paralelo }}</td>
+        <td>{% if e.idCarrera %}<a class="btn btn-chico" href="/horario?carrera={{ e.idCarrera }}&nivel={{ e.nivel }}&paralelo={{ e.paralelo }}"><i class="fa-solid fa-calendar-days"></i> Horario</a>{% endif %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if not lista %}<div class="vacio"><i class="fa-solid fa-user-graduate"></i>No hay estudiantes con esos filtros.</div>{% endif %}
+</div></div>
+{% endblock %}

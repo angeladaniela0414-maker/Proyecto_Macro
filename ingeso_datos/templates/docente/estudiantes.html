@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Mis estudiantes{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Mis estudiantes</h1><p>Estudiantes de los niveles y paralelos donde dictas clases</p></div>
+  <form method="get" class="acciones">
+    <select name="asignatura" onchange="this.form.submit()" aria-label="Filtrar por asignatura">
+      <option value="">Todas las asignaturas</option>
+      {% for a in asignaturas %}<option value="{{ a.id }}" {{ 'selected' if asig == a.id }}>N{{ a.nivel }} · {{ a.nombre }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Estudiante</th><th>Correo</th><th>Asignatura</th><th>Nivel</th><th>Paralelo</th></tr></thead>
+    <tbody>
+    {% for e in estudiantes %}
+      <tr class="filtrable"><td><strong>{{ e.apellido }} {{ e.nombre }}</strong></td><td>{{ e.correo }}</td><td>{{ e.asignatura }}</td><td>{{ e.nivel }}</td><td>{{ e.curso }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if not estudiantes %}{{ vacio('fa-user-graduate', 'No hay estudiantes para esta selección.') }}{% endif %}
+</div></div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Docentes{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Docentes</h1><p>Consulta y horario de cada docente (los datos los carga el programa de ingreso)</p></div></div>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Docente</th><th>Cédula</th><th>Correo</th><th>Especialidad</th><th>Asignaturas</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+      {% for d in docentes %}
+      <tr class="filtrable"><td><strong>{{ d.apellido }} {{ d.nombre }}</strong></td><td>{{ d.cedula }}</td><td>{{ d.correo }}</td>
+        <td>{{ d.especialidad or '—' }}</td><td>{{ d.asignaturas }}</td>
+        <td><span class="etiqueta {{ 'ok' if d.estado else 'peligro' }}">{{ 'Activo' if d.estado else 'Inactivo' }}</span></td>
+        <td><div class="fila-botones">
+          <a class="btn btn-chico" href="/horario?docente={{ d.id }}"><i class="fa-solid fa-calendar-days"></i> Horario</a>
+          <a class="btn btn-chico" href="/horario.pdf?docente={{ d.id }}" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+        </div></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if not docentes %}<div class="vacio"><i class="fa-solid fa-user-tie"></i>No hay docentes cargados.</div>{% endif %}
+</div></div>
+{% endblock %}

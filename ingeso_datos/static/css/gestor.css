@@ -1,0 +1,51 @@
+:root{--fondo:#0f1218;--panel:#171c26;--panel2:#1e2531;--borde:#2a3344;--texto:#e6e9ef;--suave:#8d97aa;
+--acento:#4f8cff;--ok:#3ecf8e;--peligro:#ef5b5b;--aviso:#f5b74f}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fondo);color:var(--texto)}
+h1{margin:0 0 1rem;font-size:1.5rem}h2{margin:0 0 .75rem;font-size:1.05rem}
+label{display:block;font-size:.78rem;color:var(--suave);margin:.5rem 0 .25rem}
+input,select{width:100%;background:var(--panel2);color:var(--texto);border:1px solid var(--borde);border-radius:8px;padding:.55rem .65rem;font:inherit}
+input:focus,select:focus,.btn:focus-visible{outline:2px solid var(--acento);outline-offset:1px}
+.btn{display:inline-block;background:var(--panel2);color:var(--texto);border:1px solid var(--borde);border-radius:8px;padding:.55rem .9rem;font:inherit;cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--acento)}
+.btn.primario{background:var(--acento);border-color:var(--acento);color:#fff}
+.btn.peligro{background:transparent;border-color:var(--peligro);color:var(--peligro)}
+.btn.chico{padding:.25rem .55rem;font-size:.8rem}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--panel);border-right:1px solid var(--borde);padding:1.25rem;display:flex;flex-direction:column;gap:1rem;position:sticky;top:0;height:100vh}
+.sidebar h2{font-size:1.2rem;line-height:1.2}
+.sidebar nav{display:flex;flex-direction:column;gap:.25rem;flex:1}
+.sidebar nav a{color:var(--suave);text-decoration:none;padding:.6rem .75rem;border-radius:8px}
+.sidebar nav a:hover{background:var(--panel2);color:var(--texto)}
+.sidebar nav a.activo{background:var(--acento);color:#fff}
+.usuario{font-size:.8rem;color:var(--suave);display:flex;flex-direction:column;gap:.5rem}
+.contenido{flex:1;padding:1.75rem;min-width:0}
+.tarjeta{background:var(--panel);border:1px solid var(--borde);border-radius:12px;padding:1.1rem;margin-bottom:1rem}
+.fila{display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end}
+.fila>div{flex:1 1 130px}.fila>.btn{flex:0 0 auto}
+.scroll{overflow-x:auto}
+.tabla,.grilla{width:100%;border-collapse:collapse;font-size:.9rem}
+.tabla th,.tabla td,.grilla th,.grilla td{border-bottom:1px solid var(--borde);padding:.55rem .6rem;text-align:left}
+.tabla th{color:var(--suave);font-weight:600;font-size:.78rem;text-transform:uppercase}
+.grilla th,.grilla td{border:1px solid var(--borde);min-width:130px;vertical-align:top;height:44px}
+.grilla th:first-child,.grilla td:first-child{min-width:70px;color:var(--suave)}
+.bloque{background:rgba(79,140,255,.18);border-left:3px solid var(--acento);border-radius:6px;padding:.3rem .45rem;margin-bottom:.25rem;font-size:.78rem}
+.bloque small{display:block;color:var(--suave)}
+.bloque button{float:right;background:none;border:0;color:var(--peligro);cursor:pointer;font-size:1rem;line-height:1}
+.etiqueta{padding:.15rem .5rem;border-radius:999px;font-size:.75rem;border:1px solid var(--borde)}
+.etiqueta.ok{color:var(--ok);border-color:var(--ok)}.etiqueta.mal{color:var(--peligro);border-color:var(--peligro)}.etiqueta.aviso{color:var(--aviso);border-color:var(--aviso)}
+.avisos{margin:.75rem 0 0;padding-left:1.1rem;color:var(--aviso);font-size:.85rem}
+.sub{color:var(--suave);font-size:.9rem}
+.resumen{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem}
+.resumen div{background:var(--panel2);border-radius:10px;padding:.8rem}.resumen strong{display:block;font-size:1.6rem}
+.toast{position:fixed;right:1rem;bottom:1rem;background:var(--panel2);border:1px solid var(--borde);padding:.7rem 1rem;border-radius:10px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none}
+.toast.ver{opacity:1;transform:none}.toast.error{border-color:var(--peligro)}.toast.exito{border-color:var(--ok)}
+@media(max-width:800px){.layout{flex-direction:column}.sidebar{width:100%;height:auto;position:static}.sidebar nav{flex-direction:row;flex-wrap:wrap}}
+.sidebar .grupo{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--suave);margin:.9rem .75rem .2rem}
+.sidebar nav button{all:unset}
+.tabla td .btn.chico{margin-left:.25rem}
+.tabla select{width:auto}
+
+.sidebar .usuario a{color:var(--suave)}
+.tabla code{background:var(--panel2);padding:.1rem .4rem;border-radius:6px}
+.aviso-clave{border-color:var(--aviso)!important}

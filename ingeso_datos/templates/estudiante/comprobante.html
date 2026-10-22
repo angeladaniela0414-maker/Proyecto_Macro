@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Comprobante {{ reg.codigo }}{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Comprobante {{ reg.codigo }}</h1><p>Registro de horario · Período {{ reg.periodo }}</p></div>
+  <div class="acciones">
+    <a class="btn" href="{{ url_for('estudiante.comprobantes') }}"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+    <button class="btn btn-primario" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir / PDF</button>
+  </div>
+</div>
+<div class="tarjeta">
+  <div class="solo-impresion"><h1>Comprobante de registro de horario · ULEAM</h1></div>
+  <p><strong>{{ perfil.nombre }} {{ perfil.apellido }}</strong> · {{ perfil.correo }}</p>
+  <p class="suave">{{ perfil.carrera }} · Nivel {{ reg.nivel }} · Paralelo {{ reg.paralelo }} · Registrado el {{ reg.fechaRegistro|fecha_es(True) }} ·
+    <span class="etiqueta {{ 'ok' if reg.estado == 'Activo' else 'aviso' }}">{{ reg.estado }}</span></p>
+  <h3 class="tarjeta-titulo" style="margin-top:18px">Materias registradas</h3>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Código</th><th>Asignatura</th><th>Docente</th><th>Horas/sem</th></tr></thead>
+    <tbody>{% for a in asignaturas %}<tr><td>{{ a.codigo }}</td><td>{{ a.asignatura }}</td><td>{{ a.docente or '—' }}</td><td>{{ '%g'|format(a.horas) }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  <h3 class="tarjeta-titulo" style="margin-top:22px">Horario</h3>
+  <div class="horario-app" id="horarioApp" data-api="{{ url_for('comun.api_horario') }}" data-fijos='{{ fijos|tojson }}'></div>
+</div>
+{% endblock %}

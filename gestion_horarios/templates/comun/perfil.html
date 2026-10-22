@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block titulo %}Mi cuenta{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Mi cuenta</h1><p>{{ usuario_nombre }} · {{ session.correo }}</p></div></div>
+<div class="tarjeta" style="max-width:520px">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-key"></i> Cambiar contraseña</span></h3>
+  <form method="post" class="formulario" autocomplete="off">
+    {{ csrf_campo() }}
+    <label class="completo">Contraseña actual<input type="password" name="actual" required autocomplete="current-password"></label>
+    <label class="completo">Nueva contraseña (mínimo 8 caracteres)<input type="password" name="nueva" minlength="8" required autocomplete="new-password"></label>
+    <label class="completo">Repetir nueva contraseña<input type="password" name="repetir" minlength="8" required autocomplete="new-password"></label>
+    <div class="completo"><button class="btn btn-primario" type="submit"><i class="fa-solid fa-check"></i> Guardar contraseña</button></div>
+  </form>
+</div>
+{% endblock %}

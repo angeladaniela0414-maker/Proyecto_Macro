@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Estudiantes{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Consultar estudiantes</h1><p>Filtra por carrera, nivel y paralelo · se muestran hasta 500 registros</p></div>
+  <div class="acciones"><button class="btn btn-primario" data-abrir-modal="modalEstudiante"><i class="fa-solid fa-user-plus"></i> Nuevo estudiante</button></div>
+</div>
+<form method="get" class="filtros">
+  <label>Carrera<select name="carrera"><option value="">Todas</option>
+    {% for c in cat.carreras %}<option {{ 'selected' if f.carrera == c.nombre }}>{{ c.nombre }}</option>{% endfor %}</select></label>
+  <label>Nivel<input type="number" name="nivel" min="1" max="12" value="{{ f.nivel }}" style="min-width:90px"></label>
+  <label>Paralelo<input type="text" name="curso" maxlength="5" value="{{ f.curso }}" style="min-width:90px"></label>
+  <button class="btn btn-primario" type="submit"><i class="fa-solid fa-filter"></i> Filtrar</button>
+  <a class="btn" href="{{ url_for('gestion.estudiantes') }}">Limpiar</a>
+</form>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Nivel</th><th>Paralelo</th><th></th></tr></thead>
+    <tbody>
+    {% for e in estudiantes %}
+      <tr class="filtrable"><td><strong>{{ e.apellido }} {{ e.nombre }}</strong></td><td>{{ e.correo }}</td><td>{{ e.carrera }}</td><td>{{ e.nivel }}</td><td>{{ e.curso }}</td>
+        <td><form method="post" action="{{ url_for('gestion.restablecer', uid=e.id) }}" data-confirmar="¿Generar una clave temporal para {{ e.nombre }} {{ e.apellido }}?">
+          {{ csrf_campo() }}<input type="hidden" name="volver" value="gestion.estudiantes">
+          <button class="btn btn-chico" type="submit"><i class="fa-solid fa-key"></i> Restablecer clave</button></form></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if not estudiantes %}{{ vacio('fa-user-graduate', 'No hay estudiantes con esos filtros.') }}{% endif %}
+</div></div>
+
+<div class="modal" id="modalEstudiante" hidden>
+  <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="tEst">
+    <div class="modal-cab"><h2 id="tEst">Nuevo estudiante</h2><button class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button></div>
+    <form method="post" class="formulario" autocomplete="off">
+      {{ csrf_campo() }}
+      <label>Nombre<input type="text" name="nombre" maxlength="80" required></label>
+      <label>Apellido<input type="text" name="apellido" maxlength="80" required></label>
+      <label class="completo">Correo institucional<input type="email" name="correo" required></label>
+      <label class="completo">Carrera<select name="carrera" required>{% for c in cat.carreras %}<option>{{ c.nombre }}</option>{% endfor %}</select></label>
+      <label>Nivel<input type="number" name="nivel" min="1" max="12" required></label>
+      <label>Paralelo<input type="text" name="curso" maxlength="5" placeholder="A" required></label>
+      <label class="completo">Contraseña provisional
+        <span class="campo-clave"><input type="password" name="clave" id="claveEst" minlength="8" required>
+        <button type="button" class="btn" data-generar-clave="#claveEst">Generar</button></span></label>
+      <div class="completo modal-acciones"><button type="button" class="btn" data-cerrar>Cancelar</button><button class="btn btn-primario" type="submit">Crear estudiante</button></div>
+    </form>
+  </div>
+</div>
+{% endblock %}

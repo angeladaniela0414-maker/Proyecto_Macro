@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="{{ 'oscuro' if rol in ('gestion', 'admin') else 'claro' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf" content="{{ csrf_token() }}">
+  <title>{% block titulo %}Portal{% endblock %} · ULEAM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/horario.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/impresion.css') }}" media="print">
+  {% block css %}{% endblock %}
+</head>
+<body>
+<div class="app">
+  <aside class="lateral" id="lateral">
+    <div>
+      <div class="marca">
+        <div class="marca-logo">U</div>
+        <div><h3>ULEAM</h3><p>{{ etiqueta_rol }}</p></div>
+      </div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          {% for ep, texto, icono in menu %}
+          <li><a href="{{ url_for(ep) }}" class="menu-enlace {{ 'activo' if request.endpoint == ep }}"><i class="fa-solid {{ icono }}"></i> {{ texto }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <a href="{{ url_for('comun.perfil') }}" class="menu-enlace {{ 'activo' if request.endpoint == 'comun.perfil' }}"><i class="fa-solid fa-user-gear"></i> Mi cuenta</a>
+      <form method="post" action="{{ url_for('auth.logout') }}">
+        {{ csrf_campo() }}
+        <button type="submit" class="menu-enlace"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      </form>
+      <small>Sistema Académico ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página">
+      </div>
+      <a class="perfil-chip" href="{{ url_for('comun.perfil') }}">
+        <span class="avatar">{{ usuario_inicial }}</span>
+        <div><strong>{{ usuario_nombre }}</strong><small>{{ etiqueta_rol }}</small></div>
+      </a>
+    </header>
+
+    <main class="contenido">
+      {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in mensajes %}
+          {% if cat == 'clave' %}
+            {% set p = msg.split('::') %}
+            <div class="alerta alerta-clave" role="status">
+              <div>
+                <strong>Clave temporal para {{ p[0] }}</strong><br>
+                <code>{{ p[1] }}</code>
+                <p class="suave" style="font-size:12px;margin-top:6px">Se muestra solo una vez. Entrégala al usuario por un canal seguro y pídele que la cambie en «Mi cuenta».</p>
+              </div>
+              <button type="button" class="btn btn-chico" data-copiar="{{ p[1] }}"><i class="fa-regular fa-copy"></i> Copiar</button>
+            </div>
+          {% else %}
+            <div class="alerta alerta-{{ 'ok' if cat == 'ok' else 'error' }}" role="status" {{ 'data-auto' if cat == 'ok' }}>{{ msg }}</div>
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
+      {% block contenido %}{% endblock %}
+    </main>
+  </div>
+</div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<script src="{{ url_for('static', filename='js/portal.js') }}"></script>
+<script src="{{ url_for('static', filename='js/horario.js') }}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

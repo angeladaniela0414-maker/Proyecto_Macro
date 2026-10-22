@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingreso | Gestión Académica</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <h1>Gestión Académica</h1>
+    <p class="sub">Ingresa con tu usuario institucional</p>
+    <label for="usuario">Usuario</label>
+    <input id="usuario" type="text" autocomplete="username" autofocus>
+    <label for="clave">Contraseña</label>
+    <input id="clave" type="password" autocomplete="current-password">
+    <p id="mensaje" class="error" role="alert"></p>
+    <button id="btnIngresar" class="btn primario">Ingresar</button>
+  </main>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

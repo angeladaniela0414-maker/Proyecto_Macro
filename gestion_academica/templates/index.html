@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel del administrador | Gestión Académica</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Gestión<br>Académica</h2>
+      <nav aria-label="Menú principal">
+        <a href="#" data-seccion="inicio" class="activo">Inicio</a>
+        <span class="grupo">Ingreso de datos</span>
+        <a href="#" data-seccion="estudiantes">Estudiantes</a>
+        <a href="#" data-seccion="docentes">Docentes</a>
+        <a href="#" data-seccion="aulas">Aulas</a>
+        <a href="#" data-seccion="laboratorios">Laboratorios</a>
+        <span class="grupo">Gestión</span>
+        <a href="#" data-seccion="asignaturas">Asignaturas</a>
+        <a href="#" data-seccion="generacion_horarios">Generación de horarios</a>
+        <a href="#" data-seccion="exportar_reportes">Exportar reportes</a>
+      </nav>
+      <div class="usuario">
+        <span>{{ usuario }} · {{ rol }}</span>
+        <button id="btnSalir" class="btn">Cerrar sesión</button>
+      </div>
+    </aside>
+    <main id="contenido" class="contenido">Cargando…</main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/estudiantes.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/docentes.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/espacios.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/asignaturas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/generacion_horarios.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/reportes.js') }}"></script>
+  <script>document.addEventListener("DOMContentLoaded", () => cargarSeccion("inicio"));</script>
+</body>
+</html>

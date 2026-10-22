@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import kpi, vacio %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<section class="banner">
+  <div><h2>Bienvenido/a, {{ session.nombre }}</h2>
+    <p>Período académico {{ periodo.nombre if periodo else 'sin período activo' }}</p></div>
+  <a class="chip-banner" href="{{ url_for('docente.horarios') }}">Consultar horarios por nivel</a>
+</section>
+<section class="kpis">
+  {{ kpi('fa-book-open', asignaturas|length, 'Asignaturas que dicto') }}
+  {{ kpi('fa-clock', '%g'|format(horas), 'Horas semanales', 'ambar') }}
+  {{ kpi('fa-user-graduate', total_estudiantes, 'Estudiantes a cargo', 'verde') }}
+  {{ kpi('fa-chalkboard-user', tutorias|length, 'Tutorías programadas') }}
+</section>
+<div class="dos-columnas">
+  <div class="tarjeta">
+    <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-graduation-cap"></i> Mis asignaturas</span><a href="{{ url_for('docente.horario') }}">Ver mi horario</a></h3>
+    {% for a in asignaturas %}
+    <div class="item filtrable"><div><h4>{{ a.asignatura }}</h4><p>{{ a.carrera }} · Nivel {{ a.nivel }} · Paralelo {{ a.paralelo }}{% if a.salones %} · {{ a.salones }}{% endif %}</p></div>
+      <span class="etiqueta">{{ '%g'|format(a.horas) }} h/sem</span></div>
+    {% else %}{{ vacio('fa-calendar', 'No tienes clases asignadas en este período.') }}{% endfor %}
+  </div>
+  <div class="columna">
+    <div class="tarjeta">
+      <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-calendar-day"></i> Clases de hoy</span></h3>
+      {% for b in clases_hoy %}
+      <div class="evento"><h4>{{ b.asignatura }}</h4><p>{{ b.horaInicio }} - {{ b.horaFin }} · Nivel {{ b.nivel }} "{{ b.paralelo }}"{% if b.salon %} · {{ b.salon }}{% endif %}</p></div>
+      {% else %}{{ vacio('fa-face-smile', 'No tienes clases hoy.') }}{% endfor %}
+    </div>
+    <div class="tarjeta">
+      <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-chalkboard-user"></i> Próximas tutorías</span><a href="{{ url_for('docente.tutorias') }}">Gestionar</a></h3>
+      {% for t in tutorias[:3] %}
+      <div class="evento"><h4>{{ t.nombre }}</h4><p>{{ t.fecha|fecha_larga }}, {{ t.horaInicio }} - {{ t.horaFin }} · {{ t.ocupados }}/{{ t.cupo }} cupos</p></div>
+      {% else %}{{ vacio('fa-calendar-check', 'No tienes tutorías programadas.') }}{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

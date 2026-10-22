@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ULEAM - Panel de Gestión Académica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body class="dashboard-layout">
+
+    <!-- Menú Lateral -->
+    <aside class="sidebar">
+        <div class="brand-header">
+            <span class="logo-icon">U</span>
+            <div>
+                <h3>ULEAM</h3>
+                <small>Gestión Académica</small>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-section="generacion_horarios">Generación Horarios</a>
+            <a href="#" class="nav-item" data-section="gestion_salones">Gestión Salones</a>
+            <a href="#" class="nav-item" data-section="consultar_docentes">Consultar Docentes</a>
+            <a href="#" class="nav-item" data-section="asignaturas">Asignaturas</a>
+            <a href="#" class="nav-item" data-section="exportar_reportes">Exportar Reportes</a>
+        </nav>
+    </aside>
+
+    <!-- Contenedor dinámico de secciones -->
+    <main id="main-content" class="content-area">
+        <!-- Aquí se cargan dinámicamente los archivos HTML de la carpeta secciones -->
+    </main>
+
+    <script src="{{ url_for('static', filename='base/main.js') }}"></script>
+</body>
+</html>

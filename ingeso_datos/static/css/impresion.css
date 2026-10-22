@@ -1,0 +1,12 @@
+/* Al imprimir / guardar como PDF: solo el contenido */
+@page{size:A4 landscape;margin:12mm}
+body{background:#fff!important;color:#000!important}
+.lateral,.topbar,.velo,.filtros,.acciones,.no-imprimir,.toasts,.alerta{display:none!important}
+.app,.principal,.contenido{display:block!important;padding:0!important}
+.tarjeta{box-shadow:none!important;border:0!important;padding:0!important}
+.solo-impresion{display:block!important;margin-bottom:10px}
+.solo-impresion h1{font-size:18px}
+.solo-impresion p{font-size:12px;color:#444}
+.horario-caja{overflow:visible!important}
+table.horario-tabla{min-width:0!important}
+.bloque-clase{break-inside:avoid;background:#eef3ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}

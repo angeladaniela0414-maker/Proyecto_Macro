@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import vacio %}
+{% block titulo %}Solicitudes de clave{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Solicitudes de clave</h1><p>Usuarios que pidieron recuperar su acceso desde la pantalla de ingreso</p></div></div>
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Correo</th><th>Fecha</th><th>Estado</th><th></th></tr></thead>
+    <tbody>{% for s in solicitudes %}
+      <tr class="filtrable"><td><strong>{{ s.correo }}</strong></td><td>{{ s.fecha|fecha_es(True) }}</td>
+        <td><span class="etiqueta {{ 'aviso' if s.estado == 'Pendiente' else ('ok' if s.estado == 'Atendida' else 'peligro') }}">{{ s.estado }}</span></td>
+        <td>{% if s.estado == 'Pendiente' %}
+          <form method="post" action="{{ url_for('gestion.atender', id_sol=s.id) }}" data-confirmar="¿Generar una clave temporal para {{ s.correo }}?">
+            {{ csrf_campo() }}<button class="btn btn-chico btn-primario" type="submit"><i class="fa-solid fa-key"></i> Generar clave temporal</button></form>{% endif %}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+  {% if not solicitudes %}{{ vacio('fa-envelope-open', 'No hay solicitudes de clave.') }}{% endif %}
+</div></div>
+{% endblock %}

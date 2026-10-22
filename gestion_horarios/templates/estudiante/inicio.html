@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% from "componentes.html" import kpi, vacio %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<section class="banner">
+  <div>
+    <h2>¡Hola de nuevo, {{ perfil.nombre }}!</h2>
+    <p>{{ perfil.facultad or 'ULEAM' }} — Período académico {{ periodo.nombre if periodo else 'sin período activo' }}</p>
+  </div>
+  {% if registro %}<span class="chip-banner">Horario registrado · Paralelo {{ registro.paralelo }}</span>
+  {% else %}<a class="chip-banner" href="{{ url_for('estudiante.registro') }}">Registrar mi horario</a>{% endif %}
+</section>
+
+<section class="kpis">
+  {{ kpi('fa-book-open', asignaturas|length, 'Materias en cursado') }}
+  {{ kpi('fa-comments', tutorias|length, 'Tutorías pendientes', 'ambar') }}
+  {{ kpi('fa-door-open', libres, 'Salones libres ahora', 'verde') }}
+</section>
+
+<div class="dos-columnas">
+  <div class="tarjeta">
+    <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-graduation-cap"></i> Mis asignaturas actuales</span><a href="{{ url_for('estudiante.horario') }}">Ver horario</a></h3>
+    {% for a in asignaturas %}
+    <div class="item filtrable">
+      <div><h4>{{ a.asignatura }}</h4><p>Docente: {{ a.docente or 'Por asignar' }} | Paralelo {{ a.paralelo }}{% if a.salones %} | {{ a.salones }}{% endif %}</p></div>
+      <span class="etiqueta">{{ '%g'|format(a.horas) }} h/sem</span>
+    </div>
+    {% else %}{{ vacio('fa-calendar', 'Aún no tienes asignaturas. Registra tu horario para verlas aquí.') }}{% endfor %}
+  </div>
+  <div class="columna">
+    <div class="tarjeta">
+      <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-calendar-day"></i> Clases de hoy</span></h3>
+      {% for b in clases_hoy %}
+      <div class="evento"><h4>{{ b.asignatura }}</h4>
+        <p><i class="fa-regular fa-clock"></i> {{ b.horaInicio }} - {{ b.horaFin }}{% if b.salon %} · <i class="fa-solid fa-location-dot"></i> {{ b.salon }}{% endif %}</p></div>
+      {% else %}{{ vacio('fa-face-smile', 'No tienes clases hoy.') }}{% endfor %}
+    </div>
+    <div class="tarjeta">
+      <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-clock"></i> Próximas tutorías</span><a href="{{ url_for('estudiante.tutorias') }}">Ver todas</a></h3>
+      {% for t in tutorias[:3] %}
+      <div class="evento"><h4>{{ t.nombre }}</h4>
+        <p><i class="fa-regular fa-calendar"></i> {{ t.fecha|fecha_larga }}, {{ t.horaInicio }} - {{ t.horaFin }}</p>
+        {% if t.salon %}<p><i class="fa-solid fa-location-dot"></i> {{ t.salon }}</p>{% endif %}</div>
+      {% else %}{{ vacio('fa-calendar-check', 'No tienes tutorías solicitadas.') }}{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

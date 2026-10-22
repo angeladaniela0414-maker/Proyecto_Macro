@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión · Portal ULEAM</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body class="pagina-login">
+  <main class="login-tarjeta">
+    <h1>Iniciar sesión</h1>
+
+    {% if error %}<div class="alerta-login" role="alert">{{ error }}</div>{% endif %}
+
+    <form id="formLogin" method="post" action="{{ url_for('auth.login') }}">
+      {{ csrf_campo() }}
+      <input type="hidden" name="siguiente" value="{{ siguiente }}">
+      <div class="campo-login">
+        <input type="text" name="usuario" placeholder="Usuario" autocomplete="username" autocapitalize="none"
+               spellcheck="false" value="{{ usuario }}" required {{ 'autofocus' if not usuario }} aria-label="Usuario">
+      </div>
+      <div class="campo-login">
+        <input type="password" name="clave" id="clave" placeholder="Contraseña" autocomplete="current-password"
+               required {{ 'autofocus' if usuario }} aria-label="Contraseña" style="padding-right:78px">
+        <button type="button" class="ver-clave" id="verClave" aria-label="Mostrar contraseña">Mostrar</button>
+      </div>
+      <div class="opciones-login">
+        <label><input type="checkbox" name="recordar"> Recordarme</label>
+        <a href="#" data-abrir-recuperar>¿Olvidaste tu contraseña?</a>
+      </div>
+      <button type="submit" class="btn-login">Ingresar</button>
+    </form>
+
+    <p class="pie-login">¿No tienes cuenta? <a href="#" data-abrir-recuperar>Solicítala a Gestión Académica</a></p>
+  </main>
+
+  <div class="modal-vidrio" id="modalRecuperar" hidden>
+    <div class="caja" role="dialog" aria-modal="true" aria-labelledby="tituloRecuperar">
+      <h2 id="tituloRecuperar">Recuperar acceso</h2>
+      <p>Escribe tu correo institucional. Gestión Académica recibirá la solicitud y te entregará una clave temporal.</p>
+      <div class="msg-login" id="msgRecuperar" hidden></div>
+      <form id="formRecuperar" method="post" action="{{ url_for('auth.recuperar') }}">
+        {{ csrf_campo() }}
+        <div class="campo-login">
+          <input type="email" name="correo" id="correoRecuperar" placeholder="Correo institucional" required aria-label="Correo institucional">
+        </div>
+        <div class="acciones-login">
+          <button type="button" class="btn-login sec" data-cerrar>Cerrar</button>
+          <button type="submit" class="btn-login">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

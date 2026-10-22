@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titulo %}Salones{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Salones</h1><p>Capacidad, tipo y disponibilidad (consulta)</p></div>
+  <form method="get" action="/salones" class="acciones">
+    <select name="tipo" data-auto aria-label="Tipo de salón">
+      <option value="">Todos los tipos</option>
+      {% for t in ['Aula', 'Laboratorio', 'Auditorio'] %}<option {{ 'selected' if tipo == t }}>{{ t }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+
+<div class="tarjeta">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-clock"></i> ¿Qué salones están libres?</span></h3>
+  <form method="get" action="/salones" class="filtros">
+    <label>Día<select name="dia">{% for n, d in dias.items() %}<option value="{{ n }}" {{ 'selected' if busqueda.dia == n }}>{{ d }}</option>{% endfor %}</select></label>
+    <label>Desde<input type="time" name="inicio" value="{{ busqueda.inicio }}" required></label>
+    <label>Hasta<input type="time" name="fin" value="{{ busqueda.fin }}" required></label>
+    <button class="btn btn-primario" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+  </form>
+  {% if error %}<div class="alerta alerta-error" style="margin-top:12px">{{ error }}</div>{% endif %}
+  {% if libres is not none %}
+    <div class="lista-chips">
+      {% for s in libres %}<span class="etiqueta ok"><i class="fa-solid fa-door-open"></i>{{ s.nombre }} · {{ s.capacidad }} pers.</span>
+      {% else %}<span class="suave">No hay salones libres en esa franja.</span>{% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<div class="tarjeta"><div class="tabla-caja">
+  <table class="tabla">
+    <thead><tr><th>Salón</th><th>Tipo</th><th>Capacidad</th><th>Estado ahora</th></tr></thead>
+    <tbody>
+      {% for s in lista %}
+      <tr class="filtrable"><td><strong>{{ s.nombre }}</strong></td><td>{{ s.tipo }}</td><td>{{ s.capacidad }} personas</td>
+        <td>{% if s.estado != 'Disponible' %}<span class="etiqueta aviso">{{ s.estado }}</span>
+            {% elif s.ocupado %}<span class="etiqueta peligro">Ocupado</span>
+            {% else %}<span class="etiqueta ok">Libre</span>{% endif %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if not lista %}<div class="vacio"><i class="fa-regular fa-building"></i>No hay salones cargados.</div>{% endif %}
+</div></div>
+{% endblock %}

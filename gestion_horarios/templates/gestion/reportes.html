@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block titulo %}Exportar reportes{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Exportar reportes</h1><p>Archivos CSV que se abren directamente en Excel</p></div></div>
+<div class="kpis">
+  {% for clave, nombre in reportes.items() %}
+  <div class="tarjeta">
+    <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-file-csv"></i> {{ nombre }}</span></h3>
+    <a class="btn btn-primario" href="{{ url_for('gestion.reporte_csv', tipo=clave) }}"><i class="fa-solid fa-download"></i> Descargar CSV</a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

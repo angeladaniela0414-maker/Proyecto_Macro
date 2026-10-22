@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block titulo %}Horarios{% endblock %}
+{% macro sel(nombre, etiqueta, opciones, actual, vacio_txt, col_val='id', col_txt='nombre') %}
+<label>{{ etiqueta }}
+  <select name="{{ nombre }}" data-auto>
+    <option value="">{{ vacio_txt }}</option>
+    {% for o in opciones %}<option value="{{ o[col_val] }}" {{ 'selected' if actual == o[col_val] }}>{{ o[col_txt] }}</option>{% endfor %}
+  </select></label>
+{% endmacro %}
+{% block contenido %}
+<div class="cabecera">
+  <div><h1>Horarios</h1><p>{{ descripcion }}</p></div>
+  <div class="acciones">
+    {% if usuario.rol != 'gestion' %}<a class="btn" href="/horario?mio=1"><i class="fa-solid fa-user"></i> Mi horario</a>{% endif %}
+    {% if bloques %}
+      <a class="btn btn-primario" href="{{ pdf_url }}" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Descargar PDF</a>
+      <button class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir</button>
+    {% endif %}
+  </div>
+</div>
+
+<form method="get" action="/horario" class="filtros">
+  {{ sel('periodo', 'Período', cat.periodos, f.periodo, 'Activo') }}
+  {{ sel('carrera', 'Carrera', cat.carreras, f.carrera, 'Todas') }}
+  {{ sel('nivel', 'Nivel', cat.niveles, f.nivel, 'Todos', 'nivel', 'nivel') }}
+  {{ sel('paralelo', 'Paralelo', cat.paralelos, f.paralelo, 'Todos', 'p', 'p') }}
+  {{ sel('asignatura', 'Asignatura', cat.asignaturas, f.asignatura, 'Todas') }}
+  {{ sel('docente', 'Docente', cat.docentes, f.docente, 'Todos') }}
+  {{ sel('salon', 'Salón', cat.salones, f.salon, 'Todos') }}
+  <a class="btn" href="/horario?{{ 'mio=1' if usuario.rol != 'gestion' else '_=1' }}"><i class="fa-solid fa-rotate-left"></i> Restablecer</a>
+</form>
+
+<div class="tarjeta">
+  <div class="solo-impresion"><h1>Horario semanal · ULEAM</h1><p>{{ descripcion }}</p></div>
+  {% if bloques is none %}
+    <div class="vacio"><i class="fa-regular fa-hand-pointer"></i>Elige al menos un filtro (carrera y nivel, docente, salón…) para ver el horario.</div>
+  {% elif not bloques %}
+    <div class="vacio"><i class="fa-regular fa-calendar-xmark"></i>No hay clases registradas para esta selección.</div>
+  {% else %}
+  <div class="horario-caja">
+    <table class="horario-tabla">
+      <thead><tr><th>Hora</th>
+        {% for n, d in dias.items() %}<th class="{{ 'hoy' if n == hoy }}">{{ d }}</th>{% endfor %}</tr></thead>
+      <tbody>
+        {% for fr in franjas %}
+        <tr><td class="franja">{{ fr[0] }} - {{ fr[1] }}</td>
+          {% for n in dias %}
+            {% set cel = celdas.get((fr, n), []) %}
+            {% if cel %}
+            <td class="{{ 'hoy' if n == hoy }}">
+              {% for b in cel %}
+              <div class="bloque-clase"><strong>{{ b.asignatura }}</strong>
+                <div class="meta">
+                  {% if varios_grupos %}<span><i class="fa-solid fa-layer-group"></i>Nivel {{ b.nivel }} · Par. {{ b.paralelo }}</span>{% endif %}
+                  {% if b.docente %}<span><i class="fa-solid fa-user-tie"></i>{{ b.docente }}</span>{% endif %}
+                  {% if b.salon %}<span><i class="fa-solid fa-door-open"></i>{{ b.salon }}</span>{% endif %}
+                </div></div>
+              {% endfor %}
+            </td>
+            {% else %}<td class="libre {{ 'hoy' if n == hoy }}">—</td>{% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+
+{% if conflictos %}
+<div class="tarjeta no-imprimir">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-triangle-exclamation"></i> Conflictos en el período ({{ conflictos|length }})</span></h3>
+  {% for k in conflictos %}
+  <div class="fila-conflicto"><strong>{{ k.tipo }}: {{ k.quien }}</strong> · {{ dias[k.dia] }} {{ k.inicio }}-{{ k.fin }} —
+    {{ k.asignatura1 }} ({{ k.paralelo1 }}) y {{ k.asignatura2 }} ({{ k.paralelo2 }})</div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

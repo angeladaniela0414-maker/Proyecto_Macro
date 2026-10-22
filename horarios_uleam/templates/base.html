@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="{{ 'oscuro' if usuario and usuario.rol == 'gestion' else 'claro' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Horarios{% endblock %} · ULEAM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/portal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/horario.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/impresion.css') }}" media="print">
+</head>
+<body>
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo">U</div><div><h3>ULEAM</h3><p>{{ etiqueta }}</p></div></div>
+      <nav aria-label="Menú principal"><ul class="menu">
+        {% for ruta, texto, icono, activo in menu %}
+        <li><a href="{{ ruta }}" class="menu-enlace {{ 'activo' if activo }}"><i class="fa-solid {{ icono }}"></i> {{ texto }}</a></li>
+        {% endfor %}
+      </ul></nav>
+    </div>
+    <div class="lateral-pie">
+      <form method="post" action="/logout">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button type="submit" class="menu-enlace"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      </form>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar">{{ (nombre_completo[:1] or 'U')|upper }}</span>
+        <div><strong>{{ nombre_completo }}</strong><small>{{ etiqueta }}</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      {% for tipo, texto in mensajes %}
+        <div class="alerta alerta-{{ 'error' if tipo == 'error' else ('aviso' if tipo == 'aviso' else 'ok') }}" role="status" {{ 'data-auto' if tipo == 'ok' }}>{{ texto }}</div>
+      {% endfor %}
+      {% block contenido %}{% endblock %}
+    </main>
+  </div>
+</div>
+<script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>

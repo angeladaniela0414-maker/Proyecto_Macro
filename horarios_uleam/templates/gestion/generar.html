@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Generar horarios{% endblock %}
+{% block contenido %}
+<div class="cabecera"><div><h1>Generar horarios</h1>
+  <p>Crea el horario de un nivel con los docentes, asignaturas y salones cargados. Al generarlo, docentes y estudiantes lo ven de inmediato.</p></div></div>
+
+<div class="tarjeta">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-wand-magic-sparkles"></i> Nuevo horario</span></h3>
+  <form method="post" action="/gestion/generar" class="formulario">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Período<select name="periodo" required>
+      {% for p in cat.periodos %}<option value="{{ p.id }}" {{ 'selected' if p.id == periodo }}>{{ p.nombre }}{{ ' (activo)' if p.activo }}</option>{% endfor %}</select></label>
+    <label>Carrera<select name="carrera" required>
+      {% for c in cat.carreras %}<option value="{{ c.id }}">{{ c.nombre }}</option>{% endfor %}</select></label>
+    <label>Nivel<select name="nivel" required>
+      {% for n in cat.niveles %}<option value="{{ n.nivel }}">Nivel {{ n.nivel }}</option>{% endfor %}</select></label>
+    <div class="completo"><span class="suave" style="font-size:11.5px;font-weight:600">Paralelos</span>
+      <div class="chk-grupo" style="margin-top:6px">
+        {% for p in (cat.paralelos or [{'p': 'A'}, {'p': 'B'}]) %}
+        <label><input type="checkbox" name="paralelo" value="{{ p.p }}" {{ 'checked' if loop.first }}> Paralelo {{ p.p }}</label>{% endfor %}
+      </div></div>
+    <div class="completo fila-botones">
+      <button class="btn btn-primario" type="submit" name="accion" value="generar"><i class="fa-solid fa-wand-magic-sparkles"></i> Generar horario</button>
+      <button class="btn btn-peligro" type="submit" name="accion" value="descartar"
+              data-confirmar-boton="¿Descartar el horario de ese nivel? Se borrarán sus bloques y docentes y estudiantes dejarán de verlo."><i class="fa-solid fa-trash"></i> Descartar horario</button>
+    </div>
+  </form>
+  <p class="suave" style="font-size:12px;margin-top:12px">Los bloques son de 2 horas entre las 07:00 y las 21:00, sin cruces de docente, salón ni grupo.
+    Solo se generan asignaturas con docente asignado. Si una asignatura ya tiene horario, no se modifica.</p>
+</div>
+
+<div class="tarjeta">
+  <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-table-cells"></i> Horarios existentes en el período</span></h3>
+  <div class="tabla-caja"><table class="tabla">
+    <thead><tr><th>Carrera</th><th>Nivel</th><th>Paralelo</th><th>Bloques</th><th></th></tr></thead>
+    <tbody>
+      {% for g in generados %}
+      <tr class="filtrable"><td>{{ g.carrera }}</td><td>{{ g.nivel }}</td><td>{{ g.paralelo }}</td><td>{{ g.bloques }}</td>
+        <td><div class="fila-botones">
+          <a class="btn btn-chico" href="/horario?periodo={{ periodo }}&carrera={{ g.idCarrera }}&nivel={{ g.nivel }}&paralelo={{ g.paralelo }}"><i class="fa-solid fa-eye"></i> Ver</a>
+          <a class="btn btn-chico" href="/horario.pdf?periodo={{ periodo }}&carrera={{ g.idCarrera }}&nivel={{ g.nivel }}&paralelo={{ g.paralelo }}" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+        </div></td></tr>
+      {% endfor %}
+    </tbody></table>
+    {% if not generados %}<div class="vacio"><i class="fa-regular fa-calendar"></i>Todavía no hay horarios en este período.</div>{% endif %}
+  </div>
+</div>
+{% endblock %}

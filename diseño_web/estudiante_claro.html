@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ULEAM - Portal Estudiantil (Tema Claro)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --uleam-red: #e30613;
+      --uleam-red-hover: #c40510;
+      --uleam-blue: #003366;
+      --bg-main: #f4f6f9;
+      --bg-card: #ffffff;
+      --bg-input: #eef2f6;
+      --border-color: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      padding: 25px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: var(--uleam-red);
+      color: #fff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(227, 6, 19, 0.25);
+    }
+
+    .menu-list { list-style: none; margin-top: 25px; }
+    .menu-item { margin-bottom: 8px; }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .menu-link:hover, .menu-link.active {
+      background: rgba(227, 6, 19, 0.08);
+      color: var(--uleam-red);
+      border-left: 4px solid var(--uleam-red);
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .search-bar {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 320px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-bar input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-size: 13px;
+      width: 100%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      background: var(--uleam-blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* BANNER DE BIENVENIDA */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--uleam-blue), #001f3f);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 25px 30px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(0, 51, 102, 0.15);
+    }
+
+    /* METRICAS KPI */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    /* GRID INFERIOR */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      gap: 20px;
+    }
+
+    .content-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .block-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--uleam-blue);
+    }
+
+    .subject-item {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--uleam-red);
+      border-radius: 10px;
+    }
+
+    .event-card {
+      background: rgba(227, 6, 19, 0.05);
+      border: 1px solid rgba(227, 6, 19, 0.2);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN LATERAL -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <div class="brand-logo">U</div>
+        <div>
+          <h3 style="font-size: 16px; color: var(--uleam-blue);">ULEAM</h3>
+          <p style="font-size: 11px; color: var(--text-muted);">Portal Estudiantil</p>
+        </div>
+      </div>
+
+      <ul class="menu-list">
+        <li class="menu-item"><a href="#" class="menu-link active"><i class="fa-solid fa-house"></i> Inicio</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-calendar-plus"></i> Registro Horarios</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-chalkboard-user"></i> Mis Tutorías</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-door-open"></i> Consulta Salones</a></li>
+        <li class="menu-item"><a href="#" class="menu-link"><i class="fa-solid fa-file-pdf"></i> Comprobantes</a></li>
+      </ul>
+    </div>
+
+    <div style="font-size: 11px; color: var(--text-muted); text-align: center;">
+      Sistema Académico ULEAM
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    
+    <header class="top-header">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+        <input type="text" placeholder="Buscar materias, docentes, aulas...">
+      </div>
+
+      <div class="user-profile">
+        <div class="avatar">D</div>
+        <div>
+          <h4 style="font-size: 13px;">Daniela Carvajal</h4>
+          <p style="font-size: 11px; color: var(--text-muted);">Software - 4.º Nivel</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- BANNER DE BIENVENIDA -->
+    <section class="welcome-banner">
+      <div>
+        <h2>¡Bienvenida de nuevo, Daniela! 👋</h2>
+        <p style="font-size: 13px; opacity: 0.9; margin-top: 4px;">
+          Facultad de Ciencias Informáticas — Período Académico 2026-1
+        </p>
+      </div>
+      <div>
+        <span style="font-size: 12px; background: rgba(255, 255, 255, 0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-weight: 600;">
+          Matrícula Regular
+        </span>
+      </div>
+    </section>
+
+    <!-- METRICAS KPI -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: rgba(227, 6, 19, 0.1); color: var(--uleam-red);">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 22px; color: var(--text-main);">5</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Materias En Cursado</p>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 22px; color: var(--text-main);">96%</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Asistencia General</p>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: rgba(2, 132, 199, 0.1); color: #0284c7;">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 22px; color: var(--text-main);">2</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Tutorías Solicitadas</p>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 22px; color: var(--text-main);">9.4</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Promedio Acumulado</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRID INFERIOR -->
+    <div class="dashboard-grid">
+      
+      <div class="content-block">
+        <div class="block-title">
+          <span><i class="fa-solid fa-graduation-cap" style="color: var(--uleam-red);"></i> Mis Asignaturas Actuales</span>
+          <a href="#" style="font-size: 12px; color: var(--uleam-blue); text-decoration: none; font-weight: 600;">Ver todas</a>
+        </div>
+
+        <div class="subject-item">
+          <div style="flex: 1;">
+            <h4 style="font-size: 14px;">Programación Orientada a Objetos</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Docente: Ing. Juan Pérez | Paralelo A</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <span style="font-size: 13px; font-weight: bold; margin-left: 15px; color: var(--uleam-blue);">85%</span>
+        </div>
+
+        <div class="subject-item">
+          <div style="flex: 1;">
+            <h4 style="font-size: 14px;">Base de Datos Relacionales</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Docente: Ing. María Mora | Paralelo A</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 70%;"></div>
+            </div>
+          </div>
+          <span style="font-size: 13px; font-weight: bold; margin-left: 15px; color: var(--uleam-blue);">70%</span>
+        </div>
+
+        <div class="subject-item">
+          <div style="flex: 1;">
+            <h4 style="font-size: 14px;">Redes y Conectividad I</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Docente: Ing. Carlos Santos | Paralelo B</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 60%;"></div>
+            </div>
+          </div>
+          <span style="font-size: 13px; font-weight: bold; margin-left: 15px; color: var(--uleam-blue);">60%</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="content-block" style="margin-bottom: 20px;">
+          <div class="block-title">
+            <span><i class="fa-solid fa-clock" style="color: #0284c7;"></i> Próximas Tutorías</span>
+          </div>
+
+          <div class="event-card">
+            <h4 style="font-size: 13px; color: var(--uleam-red);">Tutoría de Refactorización</h4>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0;">
+              <i class="fa-regular fa-calendar"></i> Hoy, 14:00 - 15:00
+            </p>
+            <p style="font-size: 12px; color: var(--text-muted);">
+              <i class="fa-solid fa-location-dot"></i> Laboratorio 2 - FCI
+            </p>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="block-title">
+            <span><i class="fa-solid fa-bullhorn" style="color: #f59e0b;"></i> Comunicados ULEAM</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            📢 <strong>Uleam Tech Fest:</strong> Revisa el cronograma de conferencias y workshops disponibles en el portal institucional.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</body>
+</html>
