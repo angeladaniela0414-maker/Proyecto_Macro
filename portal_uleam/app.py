@@ -1,23 +1,27 @@
 """Portal de Gestión Académica ULEAM: login + CRUD de las tablas de BD_Gestion_Horario."""
-from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
+import os
+
+from flask import (Flask, abort, jsonify, redirect, render_template, request,
+                   send_from_directory, session, url_for)
 from werkzeug.exceptions import HTTPException
 
 import conexion_db as db
-import os
-from flask import send_from_directory
-PUERTO = 5000          # cámbialo a 80 si quieres entrar sin escribir el puerto
-app = Flask(__name__, template_folder="interfaz")
-app.secret_key = "cambia-esta-clave-secreta"
 
+PUERTO = 5000          # cámbialo a 80 si quieres entrar sin escribir el puerto
 BASE = os.path.dirname(os.path.abspath(__file__))
 
+# Los .html están en la carpeta "interfaz". No hay carpeta "static": css, js e img están junto a app.py.
+app = Flask(__name__, template_folder="interfaz", static_folder=None)
+app.secret_key = "cambia-esta-clave-secreta"
 
-@app.route("/static/<path:ruta>", endpoint="static")
-def archivos(ruta):
+
+@app.route("/static/<path:filename>", endpoint="static")
+def archivos(filename):
     """Sirve solo las carpetas css, js e img (nunca app.py ni conexion_db.py)."""
-    if ruta.split("/")[0] not in ("css", "js", "img"):
+    if filename.split("/")[0] not in ("css", "js", "img"):
         abort(404)
-    return send_from_directory(BASE, ruta)
+    return send_from_directory(BASE, filename)
+
 
 TABLAS = [
     "Estudiante", "Docente", "Gestion_Academica", "Administrador",
