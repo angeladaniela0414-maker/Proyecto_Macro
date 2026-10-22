@@ -1,0 +1,18 @@
+__pycache__/
+base de datos/
+diseño_web/
+gestion_academica/
+gestion_horarios/
+horarios_uleam/
+ingeso_datos/
+practicas/
+*.sql
+*.zip
+*.json
+almacen.py
+ejemplo.py
+horarios.py
+menu.py
+para dani❤️.py
+Practica_proyecto_diagrama.py
+UsuariosDelSistema.py
