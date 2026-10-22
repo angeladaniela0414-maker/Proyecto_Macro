@@ -1,0 +1,75 @@
+:root { --rojo: #e4162f; --rojo-oscuro: #b90f24; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  color: #fff;
+  background: #0b1224 url('../img/login-fondo.jfif') center / cover no-repeat fixed;
+}
+
+.pantalla {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(5, 10, 30, .3);
+}
+
+.tarjeta {
+  width: min(380px, 100%);
+  padding: 34px 32px 30px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .38);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .4);
+  text-align: center;
+}
+
+.logo { width: 64px; height: 64px; margin-bottom: 8px; }
+h1 { margin: 0; font-size: 26px; font-weight: 700; text-shadow: 0 2px 10px rgba(0, 0, 0, .45); }
+.institucion { margin: 4px 0 24px; font-size: 13px; opacity: .88; }
+
+input {
+  width: 100%;
+  height: 46px;
+  margin-bottom: 14px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(255, 255, 255, .16);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+}
+input::placeholder { color: rgba(255, 255, 255, .78); }
+input:focus-visible { outline: 2px solid #fff; outline-offset: 2px; background: rgba(255, 255, 255, .24); }
+
+.error {
+  margin: 0 0 14px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: rgba(228, 22, 47, .88);
+  font-size: 13px;
+}
+.error:empty { display: none; }
+
+button {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rojo);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+button:hover { background: var(--rojo-oscuro); }
+button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+button:disabled { opacity: .7; cursor: wait; }

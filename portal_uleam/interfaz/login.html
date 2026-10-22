@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingreso | Gestión Académica ULEAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+  <main class="pantalla">
+    <form class="tarjeta" id="formLogin" novalidate>
+      <img class="logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="ULEAM">
+      <h1>Gestión Académica</h1>
+      <p class="institucion">Universidad Laica Eloy Alfaro de Manabí</p>
+
+      <input type="email" name="correo" placeholder="Correo institucional" aria-label="Correo institucional" autocomplete="username" required>
+      <input type="password" name="clave" placeholder="Contraseña" aria-label="Contraseña" autocomplete="current-password" required>
+
+      <p class="error" id="error" role="alert"></p>
+      <button type="submit">Ingresar</button>
+    </form>
+  </main>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
