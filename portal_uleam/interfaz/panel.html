@@ -6,13 +6,13 @@
   <title>Gestión Académica | ULEAM</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for( filename='css/panel.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}">
 </head>
 <body>
   <nav class="menu" id="menu" aria-label="Menú principal">
     <div class="menu-cabecera">
       <div class="gris">
-        <img src="{{ url_for(filename='img/logo.svg') }}" alt="">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="">
         <span>Menú</span>
       </div>
     </div>
@@ -65,6 +65,7 @@
     </form>
   </dialog>
 
-  <script src="{{ url_for('portal_uleam', filename='js/panel.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/panel.js') }}"></script>
 </body>
 </html>
+
