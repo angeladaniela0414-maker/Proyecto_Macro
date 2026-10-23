@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CALMHOR · Mi horario</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/portal.css">
+  <link rel="stylesheet" href="/static/css/horario.css">
+  <link rel="stylesheet" href="/static/css/impresion.css" media="print">
+</head>
+<body data-rol="docente">
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo">U</div><div><h3>ULEAM</h3><p>Portal docente</p></div></div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li><a href="/docente-inicio" class="menu-enlace"><i class="fa-solid fa-house"></i> Inicio</a></li>
+          <li><a href="/docente-horario" class="menu-enlace activo"><i class="fa-solid fa-calendar-days"></i> Mi horario</a></li>
+          <li><a href="/docente-consulta" class="menu-enlace"><i class="fa-solid fa-table-cells"></i> Horarios por nivel</a></li>
+          <li><a href="/docente-salones" class="menu-enlace"><i class="fa-solid fa-door-open"></i> Salones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <button type="button" class="menu-enlace" data-salir><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar" data-usuario-inicial>U</span>
+        <div><strong data-usuario-nombre>Usuario</strong><small>Portal docente</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      <div id="mensajes"></div>
+      <div class="cabecera">
+        <div><h1>Mi horario semanal</h1><p data-descripcion></p></div>
+        <div class="acciones"><button class="btn btn-primario" type="button" data-imprimir data-requiere-bloques><i class="fa-solid fa-file-pdf"></i> Descargar PDF</button></div>
+      </div>
+      <div class="tarjeta">
+        <div class="solo-impresion"><h1>Horario semanal · ULEAM</h1><p><span data-impresion-nombre></span> · <span data-descripcion></span></p></div>
+        <div id="matriz"></div>
+      </div>
+      <p class="suave no-imprimir" style="font-size:12px">«Descargar PDF» abre el cuadro de impresión: elige «Guardar como PDF» como destino.</p>
+    </main>
+  </div>
+</div>
+  <script src="/static/js/sesion.js" defer></script>
+</body>
+</html>

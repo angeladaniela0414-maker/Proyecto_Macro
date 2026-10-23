@@ -1,0 +1,5 @@
+python -m pip install fastapi "uvicorn[standard]" jinja2 pyodbc python-dotenv itsdangerous PARA INSTALAR LAS DEPENDENCIAS NECESARIAS (DESPUES SE USARA DOCKER PARA EVITAR FALLAS)
+
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload PARA INICIAR LA APP
+http://127.0.0.1:8000 para COMPUTADORA
+ipconfig (IPv4) para otros dispositivos
