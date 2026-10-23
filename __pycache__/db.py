@@ -1,6 +1,6 @@
 import pyodbc
 
-# Ajusta SERVIDOR si tu instancia de SQL Server tiene otro nombre.
+# Cambiar el nombre segun tu DB 
 SERVIDOR = r".\SQLEXPRESS"
 BASE_DATOS = "BD_Gestion_Horario"
 
