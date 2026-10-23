@@ -1,0 +1,613 @@
+{
+  "carrera": {
+    "universidad": "Universidad Laica Eloy Alfaro de Manabí",
+    "facultad": "Facultad de Ciencias de la vida y tecnología",
+    "extension": "Manta",
+    "nombre": "Software",
+    "modalidad": "Presencial"
+  },
+  "configuracion": {
+    "periodo_academico": "2026-2027",
+    "semanas_por_periodo": 16,
+    "max_horas_por_sesion": 3,
+    "estudiantes_por_paralelo": 40,
+    "max_paralelos_por_semestre": 6,
+    "dias": [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes"
+    ],
+    "periodos": [
+      [
+        "07:00",
+        "08:00"
+      ],
+      [
+        "08:00",
+        "09:00"
+      ],
+      [
+        "09:00",
+        "10:00"
+      ],
+      [
+        "10:00",
+        "11:00"
+      ],
+      [
+        "11:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "14:00"
+      ],
+      [
+        "14:00",
+        "15:00"
+      ],
+      [
+        "15:00",
+        "16:00"
+      ],
+      [
+        "16:00",
+        "17:00"
+      ],
+      [
+        "17:00",
+        "18:00"
+      ]
+    ]
+  },
+  "semestres": [
+    {
+      "numero": 1,
+      "unidad": "Básica",
+      "paralelos": 3
+    },
+    {
+      "numero": 2,
+      "unidad": "Básica",
+      "paralelos": 3
+    },
+    {
+      "numero": 3,
+      "unidad": "Básica",
+      "paralelos": 2
+    }
+  ],
+  "materias": [
+    {
+      "codigo": "IS-101",
+      "nombre": "Fundamentos de la Ingeniería de Software",
+      "semestre": 1,
+      "area": "Currículo de dominio",
+      "tipo_salon": "Aula",
+      "horas_semana": 6
+    },
+    {
+      "codigo": "IS-102",
+      "nombre": "Arquitectura del Computador",
+      "semestre": 1,
+      "area": "Núcleo 3: Infraestructura",
+      "tipo_salon": "Aula",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-103",
+      "nombre": "Algoritmos y Lógica de Programación",
+      "semestre": 1,
+      "area": "Núcleo 1: Programación",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 6
+    },
+    {
+      "codigo": "IS-104",
+      "nombre": "Álgebra Lineal",
+      "semestre": 1,
+      "area": "Matemática",
+      "tipo_salon": "Aula",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-105",
+      "nombre": "Cátedra Alfaro",
+      "semestre": 1,
+      "area": "Currículo institucional",
+      "tipo_salon": "Aula_virtual",
+      "horas_semana": 2
+    },
+    {
+      "codigo": "IS-201",
+      "nombre": "Ingeniería de Requerimientos",
+      "semestre": 2,
+      "area": "Currículo de dominio",
+      "tipo_salon": "Aula",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-202",
+      "nombre": "Sistemas Operativos",
+      "semestre": 2,
+      "area": "Núcleo 3: Infraestructura",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 4
+    },
+    {
+      "codigo": "IS-203",
+      "nombre": "Programación Estructurada",
+      "semestre": 2,
+      "area": "Núcleo 1: Programación",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-204",
+      "nombre": "Matemática Discreta",
+      "semestre": 2,
+      "area": "Matemática",
+      "tipo_salon": "Aula",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-205",
+      "nombre": "Economía Global",
+      "semestre": 2,
+      "area": "Currículo institucional",
+      "tipo_salon": "Aula",
+      "horas_semana": 3
+    },
+    {
+      "codigo": "IS-301",
+      "nombre": "Modelado Orientado a Objetos",
+      "semestre": 3,
+      "area": "Currículo de dominio",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-302",
+      "nombre": "Redes de Computadoras",
+      "semestre": 3,
+      "area": "Núcleo 3: Infraestructura",
+      "tipo_salon": "Laboratorio_redes",
+      "horas_semana": 4
+    },
+    {
+      "codigo": "IS-303",
+      "nombre": "Programación Orientada a Objetos",
+      "semestre": 3,
+      "area": "Núcleo 1: Programación",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 5
+    },
+    {
+      "codigo": "IS-304",
+      "nombre": "Estructura de Datos",
+      "semestre": 3,
+      "area": "Núcleo 1: Programación",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 4
+    },
+    {
+      "codigo": "IS-305",
+      "nombre": "Bases de Datos",
+      "semestre": 3,
+      "area": "Núcleo 2: Ciencia de datos",
+      "tipo_salon": "Laboratorio",
+      "horas_semana": 4
+    }
+  ],
+  "profesores": [
+    {
+      "id_profesor": 1,
+      "nombre": "Luiz Cuzme",
+      "materias": [
+        "IS-101",
+        "IS-201",
+        "IS-301"
+      ],
+      "max_horas_semana": 45
+    },
+    {
+      "id_profesor": 2,
+      "nombre": "Juan Sendon",
+      "materias": [
+        "IS-102",
+        "IS-202",
+        "IS-302"
+      ],
+      "max_horas_semana": 45
+    },
+    {
+      "id_profesor": 3,
+      "nombre": "Jharol Ormaza",
+      "materias": [
+        "IS-103",
+        "IS-203",
+        "IS-303"
+      ],
+      "max_horas_semana": 45
+    },
+    {
+      "id_profesor": 4,
+      "nombre": "Junior Zamora",
+      "materias": [
+        "IS-104",
+        "IS-204",
+        "IS-304"
+      ],
+      "max_horas_semana": 45
+    },
+    {
+      "id_profesor": 5,
+      "nombre": "Luigi",
+      "materias": [
+        "IS-105",
+        "IS-205",
+        "IS-305"
+      ],
+      "max_horas_semana": 45
+    }
+  ],
+  "salones": [
+    {
+      "id_salon": 103,
+      "nombre": "INF-B-Aula de practicas 103",
+      "capacidad": 40,
+      "tipo_salon": "Laboratorio",
+      "disponibilidad": true
+    },
+    {
+      "id_salon": 204,
+      "nombre": "INF-B-Aula de practicas 204",
+      "capacidad": 40,
+      "tipo_salon": "Laboratorio",
+      "disponibilidad": true
+    },
+    {
+      "id_salon": 101,
+      "nombre": "INF-B-Aula de practicas 101 Redes",
+      "capacidad": 40,
+      "tipo_salon": "Laboratorio_redes",
+      "disponibilidad": true
+    },
+    {
+      "id_salon": 201,
+      "nombre": "INF-B-Aula de practicas 201",
+      "capacidad": 40,
+      "tipo_salon": "Laboratorio",
+      "disponibilidad": true
+    },
+    {
+      "id_salon": 307,
+      "nombre": "INF-A-Aula 307",
+      "capacidad": 40,
+      "tipo_salon": "Aula",
+      "disponibilidad": true
+    },
+    {
+      "id_salon": 304,
+      "nombre": "INF-A-Aula 304",
+      "capacidad": 40,
+      "tipo_salon": "Aula",
+      "disponibilidad": true
+    }
+  ],
+  "sesiones": [
+    {
+      "dia": "Lunes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Martes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Jueves",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Viernes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "13:00",
+      "hora_fin": "16:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Martes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 307,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 304,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Jueves",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 307,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 304,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 307,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Martes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "13:00",
+      "hora_fin": "16:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Viernes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 307,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 304,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Viernes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 304,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "13:00",
+      "hora_fin": "16:00",
+      "codigo_asignatura": "IS-101",
+      "id_profesor": 1,
+      "id_salon": 304,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Martes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 304,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Viernes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-102",
+      "id_profesor": 2,
+      "id_salon": 307,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-103",
+      "id_profesor": 3,
+      "id_salon": 103,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Jueves",
+      "hora_inicio": "07:00",
+      "hora_fin": "10:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 304,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-104",
+      "id_profesor": 4,
+      "id_salon": 304,
+      "paralelo": "1C"
+    },
+    {
+      "dia": "Miércoles",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-105",
+      "id_profesor": 5,
+      "id_salon": null,
+      "paralelo": "1A"
+    },
+    {
+      "dia": "Martes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-105",
+      "id_profesor": 5,
+      "id_salon": null,
+      "paralelo": "1B"
+    },
+    {
+      "dia": "Lunes",
+      "hora_inicio": "10:00",
+      "hora_fin": "12:00",
+      "codigo_asignatura": "IS-105",
+      "id_profesor": 5,
+      "id_salon": null,
+      "paralelo": "1C"
+    }
+  ],
+  "horarios": {
+    "por_paralelo": {
+      "1A": [
+        "Lunes 07:00-10:00 | IS-101",
+        "Martes 07:00-10:00 | IS-101",
+        "Miércoles 07:00-10:00 | IS-102",
+        "Lunes 10:00-12:00 | IS-102",
+        "Jueves 07:00-10:00 | IS-103",
+        "Viernes 07:00-10:00 | IS-103",
+        "Lunes 13:00-16:00 | IS-104",
+        "Martes 10:00-12:00 | IS-104",
+        "Miércoles 10:00-12:00 | IS-105"
+      ],
+      "1B": [
+        "Miércoles 07:00-10:00 | IS-101",
+        "Jueves 07:00-10:00 | IS-101",
+        "Lunes 07:00-10:00 | IS-102",
+        "Miércoles 10:00-12:00 | IS-102",
+        "Martes 07:00-10:00 | IS-103",
+        "Lunes 13:00-16:00 | IS-103",
+        "Viernes 07:00-10:00 | IS-104",
+        "Lunes 10:00-12:00 | IS-104",
+        "Martes 10:00-12:00 | IS-105"
+      ],
+      "1C": [
+        "Viernes 07:00-10:00 | IS-101",
+        "Lunes 13:00-16:00 | IS-101",
+        "Martes 07:00-10:00 | IS-102",
+        "Viernes 10:00-12:00 | IS-102",
+        "Lunes 07:00-10:00 | IS-103",
+        "Miércoles 07:00-10:00 | IS-103",
+        "Jueves 07:00-10:00 | IS-104",
+        "Miércoles 10:00-12:00 | IS-104",
+        "Lunes 10:00-12:00 | IS-105"
+      ]
+    },
+    "por_semestre": {
+      "1": [
+        "1A | Lunes 07:00-10:00 | IS-101",
+        "1A | Martes 07:00-10:00 | IS-101",
+        "1A | Miércoles 07:00-10:00 | IS-102",
+        "1A | Lunes 10:00-12:00 | IS-102",
+        "1A | Jueves 07:00-10:00 | IS-103",
+        "1A | Viernes 07:00-10:00 | IS-103",
+        "1A | Lunes 13:00-16:00 | IS-104",
+        "1A | Martes 10:00-12:00 | IS-104",
+        "1B | Miércoles 07:00-10:00 | IS-101",
+        "1B | Jueves 07:00-10:00 | IS-101",
+        "1B | Lunes 07:00-10:00 | IS-102",
+        "1B | Miércoles 10:00-12:00 | IS-102",
+        "1B | Martes 07:00-10:00 | IS-103",
+        "1B | Lunes 13:00-16:00 | IS-103",
+        "1B | Viernes 07:00-10:00 | IS-104",
+        "1B | Lunes 10:00-12:00 | IS-104",
+        "1C | Viernes 07:00-10:00 | IS-101",
+        "1C | Lunes 13:00-16:00 | IS-101",
+        "1C | Martes 07:00-10:00 | IS-102",
+        "1C | Viernes 10:00-12:00 | IS-102",
+        "1C | Lunes 07:00-10:00 | IS-103",
+        "1C | Miércoles 07:00-10:00 | IS-103",
+        "1C | Jueves 07:00-10:00 | IS-104",
+        "1C | Miércoles 10:00-12:00 | IS-104",
+        "1A | Miércoles 10:00-12:00 | IS-105",
+        "1B | Martes 10:00-12:00 | IS-105",
+        "1C | Lunes 10:00-12:00 | IS-105"
+      ]
+    }
+  }
+}
