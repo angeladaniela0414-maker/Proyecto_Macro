@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CALMHOR · Inicio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/portal.css">
+  <link rel="stylesheet" href="/static/css/horario.css">
+  <link rel="stylesheet" href="/static/css/impresion.css" media="print">
+</head>
+<body data-rol="gestion">
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo">U</div><div><h3>ULEAM</h3><p>Gestión académica</p></div></div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li><a href="/gestion-inicio" class="menu-enlace activo"><i class="fa-solid fa-house"></i> Inicio</a></li>
+          <li><a href="/gestion-generar" class="menu-enlace"><i class="fa-solid fa-wand-magic-sparkles"></i> Generar horarios</a></li>
+          <li><a href="/gestion-consulta" class="menu-enlace"><i class="fa-solid fa-table-cells"></i> Consultar horarios</a></li>
+          <li><a href="/gestion-docentes" class="menu-enlace"><i class="fa-solid fa-user-tie"></i> Docentes</a></li>
+          <li><a href="/gestion-estudiantes" class="menu-enlace"><i class="fa-solid fa-user-graduate"></i> Estudiantes</a></li>
+          <li><a href="/gestion-salones" class="menu-enlace"><i class="fa-solid fa-door-open"></i> Salones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <button type="button" class="menu-enlace" data-salir><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar" data-usuario-inicial>U</span>
+        <div><strong data-usuario-nombre>Usuario</strong><small>Gestión académica</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      <div id="mensajes"></div>
+      <section class="banner">
+        <div><h2>¡Hola, <span data-usuario-nombre-corto>…</span>!</h2><p>Período académico 2026-1</p></div>
+        <a class="chip-banner" href="/gestion-generar">Generar horarios</a>
+      </section>
+      <section class="kpis"><div class="kpi"><div class="kpi-icono "><i class="fa-solid fa-user-tie"></i></div><div><strong data-kpi="docentes">0</strong><span>Docentes activos</span></div></div><div class="kpi"><div class="kpi-icono verde"><i class="fa-solid fa-user-graduate"></i></div><div><strong data-kpi="estudiantes">0</strong><span>Estudiantes</span></div></div><div class="kpi"><div class="kpi-icono ambar"><i class="fa-solid fa-door-open"></i></div><div><strong data-kpi="salones">0</strong><span>Salones disponibles</span></div></div><div class="kpi"><div class="kpi-icono "><i class="fa-solid fa-table-cells"></i></div><div><strong data-kpi="bloques">0</strong><span>Bloques de horario</span></div></div><div class="kpi"><div class="kpi-icono ambar"><i class="fa-solid fa-triangle-exclamation"></i></div><div><strong data-kpi="conflictos">0</strong><span>Conflictos detectados</span></div></div></section>
+      <div class="tarjeta">
+        <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-triangle-exclamation"></i> Conflictos detectados</span></h3>
+        <div id="listaConflictos"></div>
+      </div>
+    </main>
+  </div>
+</div>
+  <script src="/static/js/sesion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CALMHOR · Consultar horarios</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/portal.css">
+  <link rel="stylesheet" href="/static/css/horario.css">
+  <link rel="stylesheet" href="/static/css/impresion.css" media="print">
+</head>
+<body data-rol="gestion">
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo">U</div><div><h3>ULEAM</h3><p>Gestión académica</p></div></div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li><a href="/gestion-inicio" class="menu-enlace"><i class="fa-solid fa-house"></i> Inicio</a></li>
+          <li><a href="/gestion-generar" class="menu-enlace"><i class="fa-solid fa-wand-magic-sparkles"></i> Generar horarios</a></li>
+          <li><a href="/gestion-consulta" class="menu-enlace activo"><i class="fa-solid fa-table-cells"></i> Consultar horarios</a></li>
+          <li><a href="/gestion-docentes" class="menu-enlace"><i class="fa-solid fa-user-tie"></i> Docentes</a></li>
+          <li><a href="/gestion-estudiantes" class="menu-enlace"><i class="fa-solid fa-user-graduate"></i> Estudiantes</a></li>
+          <li><a href="/gestion-salones" class="menu-enlace"><i class="fa-solid fa-door-open"></i> Salones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <button type="button" class="menu-enlace" data-salir><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar" data-usuario-inicial>U</span>
+        <div><strong data-usuario-nombre>Usuario</strong><small>Gestión académica</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      <div id="mensajes"></div>
+      <div class="cabecera">
+        <div><h1>Consultar horarios</h1><p data-descripcion>Elige los filtros para ver un horario</p></div>
+        <div class="acciones"><button class="btn btn-primario" type="button" data-imprimir data-requiere-bloques disabled><i class="fa-solid fa-file-pdf"></i> Descargar PDF</button></div>
+      </div>
+      <div class="filtros">
+  <label>Período<select data-filtro="periodo" data-llenar="periodos"></select></label>
+  <label>Carrera<select data-filtro="carrera" data-llenar="carreras"></select></label>
+  <label>Nivel<select data-filtro="nivel" data-llenar="niveles"></select></label>
+  <label>Paralelo<select data-filtro="paralelo" data-llenar="paralelos"></select></label>
+  <label>Asignatura<select data-filtro="asignatura" data-llenar="asignaturas"></select></label>
+  <label>Docente<select data-filtro="docente" data-llenar="docentes"></select></label>
+  <label>Salón<select data-filtro="salon" data-llenar="salones"></select></label>
+        <button class="btn" type="button" id="restablecer"><i class="fa-solid fa-rotate-left"></i> Restablecer</button>
+      </div>
+      <div class="tarjeta">
+        <div class="solo-impresion"><h1>Horario semanal · ULEAM</h1><p data-descripcion></p></div>
+        <div id="matriz"></div>
+      </div>
+      <div class="tarjeta no-imprimir">
+        <h3 class="tarjeta-titulo"><span><i class="fa-solid fa-triangle-exclamation"></i> Conflictos en el período (<span id="totalConflictos">0</span>)</span></h3>
+        <div id="listaConflictos"></div>
+      </div>
+    </main>
+  </div>
+</div>
+  <script src="/static/js/sesion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+/* Impresión de horarios en PDF */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm
+  }
+
+  body {
+    background: #fff !important;
+    color: #171D29 !important
+  }
+
+  .lateral,
+  .topbar,
+  .acciones,
+  .filtros,
+  .velo,
+  .no-imprimir {
+    display: none !important
+  }
+
+  .app,
+  .principal,
+  .contenido {
+    display: block !important
+  }
+
+  .contenido {
+    padding: 0 !important
+  }
+
+  .tarjeta {
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important
+  }
+
+  .solo-impresion {
+    display: block !important
+  }
+
+  .horario-caja {
+    overflow: visible;
+    border: 0
+  }
+
+  .horario-tabla {
+    min-width: 0;
+    font-size: 10px
+  }
+
+  .horario-tabla th,
+  .horario-tabla td {
+    border: 1px solid #bbb !important
+  }
+
+  .bloque-clase {
+    background: #FCE8E9 !important;
+    border-left: 3px solid #E30613 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact
+  }
+}
