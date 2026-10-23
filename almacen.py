@@ -1,78 +1,86 @@
-# Lee y guarda los datos. Cuando pasen a base de datos, solo se cambia este archivo.
 import json
-from horarios import Asignatura, Salon, Bloque_horario
 from pathlib import Path
+from horarios import Materia, Salon, Profesor, Bloque_horario
 
-CARPETA = Path(__file__).resolve().parent
-ARCHIVO = CARPETA / "datos_horario.json"
+ARCHIVO = Path(__file__).resolve().parent / 'datos_horario.json'
 
+def cargar_datos():
+    with ARCHIVO.open('r', encoding='utf-8') as archivo:
+        return json.load(archivo)
 
-def cargar():
-    with open(ARCHIVO, "r", encoding="utf-8") as f:
-        d = json.load(f)
+def construir_datos(datos):
+    asignaturas = []
+    for m in datos['materias']:
+        asignatura = Materia(m['codigo'], m['nombre'], m['semestre'],
+                            m.get('area', ''), m.get('tipo_salon', 'Aula'),
+                            m.get('horas_semana', 3))
+        asignaturas.append(asignatura)
 
-    asignaturas = [
-        Asignatura(**a) for a in d["asignaturas"]
-    ]
+    profesores = []
+    for p in datos['profesores']:
+        profesor = Profesor(p['id_profesor'], p['nombre'], p['materias'],
+                            p.get('max_horas_semana', 20))
+        profesores.append(profesor)
 
-    salones = [
-        Salon(**s) for s in d["salones"]
-    ]
+    salones = []
+    for s in datos['salones']:
+        salon = Salon(s['id_salon'], s['nombre'], s['capacidad'],
+                      s['tipo_salon'], s['disponibilidad'])
+        salones.append(salon)
 
-    por_asig = {
-        a.id_asignatura: a for a in asignaturas
-    }
+    paralelos = []
+    for semestre in datos['semestres']:
+        for i in range(semestre['paralelos']):
+            letra = chr(65 + i)
+            paralelos.append(str(semestre['numero']) + letra)
+    return asignaturas, profesores, salones, paralelos
 
-    por_salon = {
-        s.id_salon: s for s in salones
-    }
+def guardar_sesiones(datos, bloques):
+    datos['sesiones'] = []
+    datos['horarios'] = {'por_paralelo': {}, 'por_semestre': {}}
+    for b in bloques:
+        id_salon = b.salon.id_salon if b.salon is not None else None
+        datos['sesiones'].append({
+            'dia': b.dia, 'hora_inicio': b.hora_inicio, 'hora_fin': b.hora_fin,
+            'codigo_asignatura': b.materia.codigo, 'id_profesor': b.profesor.id_profesor,
+            'id_salon': id_salon, 'paralelo': b.paralelo
+        })
+        por_paralelo = datos['horarios']['por_paralelo']
+        por_semestre = datos['horarios']['por_semestre']
+        semestre = str(b.materia.semestre)
+        if b.paralelo not in por_paralelo:
+            por_paralelo[b.paralelo] = []
+        if semestre not in por_semestre:
+            por_semestre[semestre] = []
+        resumen = f'{b.dia} {b.hora_inicio}-{b.hora_fin} | {b.materia.codigo}'
+        por_paralelo[b.paralelo].append(resumen)
+        por_semestre[semestre].append(f'{b.paralelo} | {resumen}')
+    with ARCHIVO.open('w', encoding='utf-8') as archivo:
+        json.dump(datos, archivo, ensure_ascii=False, indent=2)
+    print('JSON guardado en:', ARCHIVO)
 
+def recuperar_sesiones(datos, asignaturas, profesores, salones, paralelos):
     bloques = []
-
-    for b in d["bloques"]:
-        nuevo_bloque = Bloque_horario(
-            b["dia"],
-            b["hora_inicio"],
-            b["hora_fin"],
-            por_salon[b["id_salon"]],
-            por_asig[b["id_asignatura"]],
-            b["profesor"],
-            b["paralelo"]
-        )
-
-        bloques.append(nuevo_bloque)
-
-    datos = {
-        "periodo_academico": d["periodo_academico"],
-        "profesores": [
-            p["nombre"] for p in d["profesores"]
-        ],
-        "paralelos": [
-            p["nombre"] for p in d["paralelos"]
-        ],
-        "asignaturas": asignaturas,
-        "salones": salones,
-        "bloques": bloques
-    }
-
-    return datos
-
-  
-
-def guardar(datos):
-    d = {
-        "periodo_academico": datos["periodo_academico"],
-        "profesores": [{"id_profesor": i, "nombre": n} for i, n in enumerate(datos["profesores"], 1)],
-        "paralelos": [{"id_paralelo": i, "nombre": n} for i, n in enumerate(datos["paralelos"], 1)],
-        "asignaturas": [vars(a) for a in datos["asignaturas"]],
-        "salones": [vars(s) for s in datos["salones"]],
-        "bloques": [
-            {"dia": b.dia, "hora_inicio": b.hora_inicio, "hora_fin": b.hora_fin,
-             "id_asignatura": b.asignatura.id_asignatura, "id_salon": b.salon.id_salon,
-             "profesor": b.profesor, "paralelo": b.paralelo}
-            for b in datos["bloques"]
-        ],
-    }
-    with open(ARCHIVO, "w", encoding="utf-8") as f:
-        json.dump(d, f, indent=2, ensure_ascii=False)
-
+    for sesion in datos.get('sesiones', []):
+        materia = None
+        profesor = None
+        salon = None
+        for a in asignaturas:
+            if a.codigo == sesion['codigo_asignatura']:
+                materia = a
+                break
+        for p in profesores:
+            if p.id_profesor == sesion['id_profesor']:
+                profesor = p
+                break
+        for s in salones:
+            if s.id_salon == sesion['id_salon']:
+                salon = s
+                break
+        if materia is None or profesor is None or sesion['paralelo'] not in paralelos:
+            print('Advertencia: se omitió una sesión con datos inexistentes.')
+            continue
+        bloques.append(Bloque_horario(sesion['dia'], sesion['hora_inicio'],
+                                     sesion['hora_fin'], salon, materia,
+                                     profesor, sesion['paralelo']))
+    return bloques

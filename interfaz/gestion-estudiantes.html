@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudiantes · ULEAM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/portal.css">
+  <link rel="stylesheet" href="css/horario.css">
+  <link rel="stylesheet" href="css/impresion.css" media="print">
+</head>
+<body data-rol="gestion">
+<div class="app">
+  <aside class="lateral">
+    <div>
+      <div class="marca"><div class="marca-logo"><img src="img/logo-uleam.jpg" alt="Logo ULEAM"></div><div><h3>ULEAM</h3><p>Gestión académica</p></div></div>
+      <nav aria-label="Menú principal">
+        <ul class="menu">
+          <li><a href="gestion-inicio.html" class="menu-enlace"><i class="fa-solid fa-house"></i> Inicio</a></li>
+          <li><a href="gestion-generar.html" class="menu-enlace"><i class="fa-solid fa-wand-magic-sparkles"></i> Generar horarios</a></li>
+          <li><a href="gestion-consulta.html" class="menu-enlace"><i class="fa-solid fa-table-cells"></i> Consultar horarios</a></li>
+          <li><a href="gestion-docentes.html" class="menu-enlace"><i class="fa-solid fa-user-tie"></i> Docentes</a></li>
+          <li><a href="gestion-estudiantes.html" class="menu-enlace activo"><i class="fa-solid fa-user-graduate"></i> Estudiantes</a></li>
+          <li><a href="gestion-salones.html" class="menu-enlace"><i class="fa-solid fa-door-open"></i> Salones</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lateral-pie">
+      <button type="button" class="menu-enlace" data-salir><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <small>Sistema de horarios ULEAM</small>
+    </div>
+  </aside>
+  <div class="velo" id="velo"></div>
+  <div class="principal">
+    <header class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+      <div class="buscador"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="buscador" placeholder="Filtrar en esta página…" aria-label="Filtrar en esta página"></div>
+      <div class="perfil-chip">
+        <span class="avatar" data-usuario-inicial>U</span>
+        <div><strong data-usuario-nombre>Usuario</strong><small>Gestión académica</small></div>
+      </div>
+    </header>
+    <main class="contenido">
+      <div id="mensajes"></div>
+      <div class="cabecera"><div><h1>Estudiantes</h1><p>Consulta por carrera, nivel y paralelo</p></div></div>
+      <div class="filtros">
+        <label>Carrera<select data-filtro="carrera" data-llenar="carreras"></select></label>
+        <label>Nivel<select data-filtro="nivel" data-llenar="niveles"></select></label>
+        <label>Paralelo<select data-filtro="paralelo" data-llenar="paralelos"></select></label>
+        <button class="btn" type="button" id="restablecer"><i class="fa-solid fa-rotate-left"></i> Limpiar</button>
+      </div>
+      <div class="tarjeta"><div class="tabla-caja">
+        <table class="tabla">
+          <thead><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Nivel</th><th>Paralelo</th><th></th></tr></thead>
+          <tbody id="tablaEstudiantes"></tbody>
+        </table>
+        <div class="vacio" id="sinEstudiantes" hidden><i class="fa-solid fa-user-graduate"></i>No hay estudiantes con esos filtros.</div>
+      </div></div>
+    </main>
+  </div>
+</div>
+<script src="js/datos.js"></script>
+<script src="js/sesion.js"></script>
+<script src="js/app.js"></script>
+<script src="js/horarios.js"></script>
+<script src="js/estudiantes.js"></script>
+</body>
+</html>

@@ -1,177 +1,139 @@
-from abc import ABCMeta
-from abc import abstractmethod
+from abc import ABCMeta, abstractmethod
 
-class Paralelo:
-    def __init__(self, asignatura, profesor, semestre, paralelo):
-        self.asignatura = asignatura
-        self.profesor = profesor
-        self.semestre = semestre
-        self.paralelo = paralelo
-    def __str__(self):
-        return f"{self.asignatura} - Semestre {self.semestre} - Paralelo {self.paralelo}"
-
-class Asignatura:
-    def __init__(self, id_asignatura, nombre, semestre):
-        self.id_asignatura = id_asignatura
+class Materia:
+    def __init__(self, codigo, nombre, semestre, area, tipo_salon='Aula', horas_semana=3):
+        self.codigo = codigo
         self.nombre = nombre
         self.semestre = semestre
+        self.area = area
+        self.tipo_salon = tipo_salon
+        self.horas_semana = horas_semana
 
     def __str__(self):
-        return f"{self.nombre} - Semestre {self.semestre}"
-    
+        return f'{self.codigo} {self.nombre}'
+
+class Profesor:
+    def __init__(self, id_profesor, nombre, materias=None, max_horas_semana=20):
+        self.id_profesor = id_profesor
+        self.nombre = nombre
+        self.materias = materias if materias is not None else []
+        self.max_horas_semana = max_horas_semana
+
+    def puede_dictar(self, materia):
+        return materia.codigo in self.materias
+
+    def __str__(self):
+        return self.nombre
+
 class Salon:
-    def __init__(self, id_salon, nombre, capacidad=30, tipo_salon="Aula", disponibilidad=True):
+    def __init__(self, id_salon, nombre, capacidad=30, tipo_salon='Aula', disponibilidad=True):
         self.id_salon = id_salon
         self.nombre = nombre
         self.capacidad = capacidad
         self.tipo_salon = tipo_salon
         self.disponibilidad = disponibilidad
 
+    def __str__(self):
+        return f'{self.nombre} ({self.tipo_salon}, capacidad {self.capacidad})'
+
 class Bloque_horario:
-    def __init__(self, dia, hora_inicio, hora_fin, salon, asignatura, profesor, paralelo):
+    def __init__(self, dia, hora_inicio, hora_fin, salon, materia, profesor, paralelo):
         self.dia = dia
         self.hora_inicio = hora_inicio
         self.hora_fin = hora_fin
         self.salon = salon
-        self.asignatura = asignatura
+        self.materia = materia
         self.profesor = profesor
-        self.paralelo = paralelo
+        self.paralelo = paralelo  # texto: '1A', '2B', etc.
 
-    def se_cruza_con(self, otro_bloque): #otro representa un objeto de tipo Bloque_Horario
+    def horas(self):
+        h1, m1 = map(int, self.hora_inicio.split(':'))
+        h2, m2 = map(int, self.hora_fin.split(':'))
+        return ((h2 * 60 + m2) - (h1 * 60 + m1)) / 60
 
-        mismo_dia = self.dia == otro_bloque.dia
+    def se_cruza_con(self, otro):
+        return (self.dia == otro.dia and self.hora_inicio < otro.hora_fin
+                and otro.hora_inicio < self.hora_fin)
 
-        horas_cruzadas = (
-            self.hora_inicio < otro_bloque.hora_fin
-            and otro_bloque.hora_inicio < self.hora_fin
-        )
-
-        return mismo_dia and horas_cruzadas
-
-    def __str__(self):
-        return (
-            f"{self.dia}: {self.hora_inicio}-{self.hora_fin} | "
-            f"{self.asignatura.nombre} | "
-            f"Profesor: {self.profesor} | "
-            f"Paralelo: {self.paralelo} | "
-            f"Salón: {self.salon.nombre}"
-        )
-
-
-#clase abstracta horario
-class Horario(metaclass=ABCMeta):
-    def __init__(self, id_horario, periodo_academico, **kwargs):
-        super().__init__(**kwargs)
-        self.id_horario = id_horario
-        self.periodo_academico = periodo_academico
-        self.bloques = [] #sesion
-
-    def agregar_bloque(self, bloque):
-        if self.validar_cruce_horario(bloque):
-            print("No se puede agregar: existe un cruce.")
+    def tiene_conflicto_con(self, otro):
+        if not self.se_cruza_con(otro):
             return False
-
-        self.bloques.append(bloque)
-        return True
-
-    def existe_conflicto(self, nuevo, existente):
-        if not nuevo.se_cruza_con(existente):
-            return False
-
-        mismo_profesor = (
-            nuevo.profesor == existente.profesor
-        )
-        mismo_paralelo = (
-            nuevo.paralelo == existente.paralelo
-        )
-        mismo_salon = (
-            nuevo.salon.id_salon == existente.salon.id_salon
-        )
-
-        return (
-            mismo_profesor
-            or mismo_paralelo
-            or mismo_salon
-        )
-
-    
-
-    @abstractmethod
-    def consultar_horario(self):
-        pass
-
- 
-
-    @abstractmethod
-    def validar_cruce_horario(self, otro_bloque):
-        pass
-
-class Horario_profesor(Horario):
-    def __init__(self, id_horario, periodo_academico, profesor=None, **kwargs):
-        super().__init__(id_horario, periodo_academico, **kwargs)
-        self.profesor = profesor
-
-    def consultar_horario(self):
-        for bloque in self.bloques:
-            if bloque.profesor == self.profesor:
-                print(bloque)
-
-  
-    def validar_cruce_horario(self, nuevo_bloque):
-        for bloque in self.bloques:
-            if bloque.profesor == self.profesor:
-                if self.existe_conflicto(nuevo_bloque, bloque):
-                    return True
-        return False
-
-
-class Horario_estudiante(Horario):
-    def __init__(self, id_horario, periodo_academico, estudiante=None, **kwargs):
-        super().__init__(id_horario, periodo_academico, **kwargs)
-        self.estudiante = estudiante
-
-    def consultar_horario(self):
-        for bloque in self.bloques:
-            if bloque.paralelo == self.paralelo:
-                print(bloque)
-
-
-
-    def validar_cruce_horario(self, nuevo_bloque):
-        for bloque in self.bloques:
-            if self.existe_conflicto(nuevo_bloque, bloque):
+        if self.profesor.id_profesor == otro.profesor.id_profesor:
+            return True
+        if self.paralelo == otro.paralelo:
+            return True
+        if self.salon is not None and otro.salon is not None:
+            if self.salon.id_salon == otro.salon.id_salon:
                 return True
         return False
 
-class Horario_catedra(Horario_estudiante, Horario_profesor):
-    def __init__(self, id_horario, periodo_academico, profesor, estudiante):
-        super().__init__(
-            id_horario,
-            periodo_academico,
-            profesor=profesor,
-            estudiante=estudiante
-        )
+    def __str__(self):
+        salon = self.salon.nombre if self.salon is not None else 'Virtual'
+        return (f'{self.dia} {self.hora_inicio}-{self.hora_fin} | {self.paralelo} | '
+                f'{self.materia.nombre} | {self.profesor.nombre} | {salon}')
+
+class Horario(metaclass=ABCMeta):
+    def __init__(self, id_horario, periodo_academico, bloques):
+        self.id_horario = id_horario
+        self.periodo_academico = periodo_academico
+        self.bloques = bloques
+
+    @abstractmethod
+    def consultar_horario(self):
+        pass
+
+    def imprimir_horario(self):
+        encontrados = self.consultar_horario()
+        if not encontrados:
+            print('No hay horarios para esta consulta.')
+            return
+        for bloque in encontrados:
+            print(bloque)
+
+class Horario_estudiante(Horario):
+    def __init__(self, id_horario, periodo_academico, bloques, paralelo):
+        super().__init__(id_horario, periodo_academico, bloques)
+        self.paralelo = paralelo
 
     def consultar_horario(self):
+        resultado = []
+        for b in self.bloques:
+            if b.paralelo == self.paralelo:
+                resultado.append(b)
+        return resultado
 
-        for bloque in self.bloques:
-            if bloque.paralelo == self.estudiante and bloque.profesor == self.profesor:
-                print(bloque)
+class Horario_semestre(Horario):
+    def __init__(self, id_horario, periodo_academico, bloques, semestre):
+        super().__init__(id_horario, periodo_academico, bloques)
+        self.semestre = semestre
 
-    
+    def consultar_horario(self):
+        resultado = []
+        for b in self.bloques:
+            if b.materia.semestre == self.semestre:
+                resultado.append(b)
+        return resultado
+
+class Horario_profesor(Horario):
+    def __init__(self, id_horario, periodo_academico, bloques, profesor):
+        super().__init__(id_horario, periodo_academico, bloques)
+        self.profesor = profesor
+
+    def consultar_horario(self):
+        resultado = []
+        for b in self.bloques:
+            if b.profesor.id_profesor == self.profesor.id_profesor:
+                resultado.append(b)
+        return resultado
+
 class Horario_salon(Horario):
-    def __init__(self, id_horario, periodo_academico, salon):
-        super().__init__(id_horario, periodo_academico)
+    def __init__(self, id_horario, periodo_academico, bloques, salon):
+        super().__init__(id_horario, periodo_academico, bloques)
         self.salon = salon
 
     def consultar_horario(self):
-        for bloque in self.bloques:
-            if bloque.salon.id_salon == self.salon.id_salon:
-                print(bloque)
-
-
-    def validar_cruce_horario(self, nuevo_bloque):
-        for bloque in self.bloques:
-            if self.existe_conflicto(nuevo_bloque, bloque):
-                return True
-        return False
+        resultado = []
+        for b in self.bloques:
+            if b.salon is not None and b.salon.id_salon == self.salon.id_salon:
+                resultado.append(b)
+        return resultado

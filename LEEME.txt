@@ -1,0 +1,34 @@
+INTERFAZ DE HORARIOS ULEAM (solo HTML + CSS + JS, sin servidor ni base de datos)
+
+Cómo abrirla: doble clic en index.html (funciona en cualquier navegador).
+
+Usuarios de prueba
+  Gestión ........ admin / 1234        (también: gestion / Uleam2026*)
+  Docente ........ jperez / Uleam2026*  (mmora, csantos, arivas, pgarcia)
+  Estudiante ..... dcarvajal / Uleam2026*  (mzambrano, lintriago, ...)
+  En el login se puede escribir el correo completo (jperez@live.uleam.edu.ec) o solo jperez.
+
+Archivos
+  index.html ................ Inicio de sesión
+  estudiante-*.html ......... inicio, horario (mi horario), consulta (filtros), salones
+  docente-*.html ............ inicio, horario (mi horario), consulta (por nivel), salones
+  gestion-*.html ............ inicio, generar, consulta, docentes, estudiantes, salones
+  css/ ...................... base, login, portal, horario, impresion (PDF/imprimir)
+  js/datos.js ............... DATOS DE EJEMPLO (reemplazar por los de tu base de datos)
+  js/sesion.js .............. ingreso, cierre de sesión y protección de páginas por rol
+  js/app.js ................. menú, buscador, selects de filtros, utilidades
+  js/horarios.js ............ filtrar, dibujar la matriz semanal, conflictos y generación de horarios
+  js/login.js, inicio.js, mihorario.js, consulta.js, salones.js, generar.js, docentes.js, estudiantes.js
+                              un script por pantalla
+
+Qué funciona
+  - Login por rol y protección de páginas (un estudiante no entra a las pantallas de gestión).
+  - Filtros de horarios (período, carrera, nivel, paralelo, asignatura, docente, salón); la dirección guarda los filtros.
+  - «Descargar PDF» abre el cuadro de impresión: elige «Guardar como PDF».
+  - Gestión: generar y descartar horarios; lo generado lo ven al instante docentes y estudiantes
+    (se guarda en el navegador). «Restablecer ejemplo» vuelve a los datos iniciales.
+  - Salones libres por día y franja, conflictos de docente/salón, listas de docentes y estudiantes.
+
+Notas
+  - Los íconos usan Font Awesome desde internet; sin conexión los botones se ven sin ícono.
+  - Las contraseñas de js/datos.js son solo de ejemplo: al conectar el sistema real, el ingreso debe validarse en el servidor.

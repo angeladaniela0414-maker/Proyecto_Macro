@@ -1,0 +1,86 @@
+/* Variables, reset y temas. Tema claro: estudiante y docente. Tema oscuro: gestión académica. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --fondo:#F2F2F2; 
+  --lateral:#ffffff; 
+  --superficie:#ffffff; 
+  --superficie-2:#F2F2F2;
+  --borde:#D4D4D4; 
+  --texto:#171D29; 
+  --suave:#606060;
+  --primario:#E30613; 
+  --primario-osc:#B30510; 
+  --primario-sup:#FCE8E9; 
+  --sobre-primario:#ffffff;
+  --ok:#0f8a63; 
+  --ok-sup:#dcf5ec; 
+  --aviso:#b36b00; 
+  --aviso-sup:#fdf0d6;
+  --peligro:#E30613; 
+  --peligro-sup:#FCE8E9;
+  --sombra:0 6px 22px rgba(23,29,41,.10); 
+  --radio:14px;
+}
+[data-tema="oscuro"]{
+  --fondo:#171D29; 
+  --lateral:#121722; 
+  --superficie:#222936; 
+  --superficie-2:#2B3341;
+  --borde:rgba(255,255,255,.09); 
+  --texto:#f1f5f9; 
+  --suave:#B8BEC8;
+  --primario:#E30613; 
+  --primario-osc:#B30510; 
+  --primario-sup:rgba(227,6,19,.16); 
+  --sobre-primario:#ffffff;
+  --ok:#34d3a0; 
+  --ok-sup:rgba(16,185,129,.16); 
+  --aviso:#f5b13d; 
+  --aviso-sup:rgba(245,158,11,.16);
+  --peligro:#ff6b78; 
+  --peligro-sup:rgba(239,68,68,.16);
+  --sombra:0 6px 22px rgba(0,0,0,.35);
+}
+html{
+  font-size:15px
+}
+
+body{
+  font-family:"Segoe UI",
+  system-ui,-apple-system,
+  sans-serif;
+  background:var(--fondo);
+  color:var(--texto);
+  line-height:1.45;
+  min-height:100vh
+}
+
+a{
+  color:var(--primario);
+  text-decoration:none
+}
+
+a:hover{
+  text-decoration:underline
+}
+
+button,input,select,textarea{
+  font:inherit;color:inherit
+}
+
+:focus-visible{
+  outline:3px solid var(--primario);
+  outline-offset:2px
+}
+
+[hidden]{
+  display:none!important
+}
+
+.oculto{
+  display:none!important
+}
+.suave{
+  color:var(--suave)
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

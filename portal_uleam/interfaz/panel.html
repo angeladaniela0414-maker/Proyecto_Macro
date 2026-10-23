@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión Académica | ULEAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}">
+</head>
+<body>
+  <nav class="menu" id="menu" aria-label="Menú principal">
+    <div class="menu-cabecera">
+      <div class="gris">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="">
+        <span>Menú</span>
+      </div>
+    </div>
+    <div id="listaMenu"></div>
+  </nav>
+  <div class="velo" id="velo"></div>
+
+  <header class="barra">
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">☰</button>
+    <div class="titulo-barra">
+      <strong>Gestión Académica</strong>
+      <span>Universidad Laica Eloy Alfaro de Manabí</span>
+    </div>
+    <div class="usuario">
+      <span>{{ nombre }} <small>{{ rol }}</small></span>
+      <a href="/salir">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="contenido">
+    <section id="bienvenida" class="bienvenida">
+      <h2>Bienvenido, {{ nombre }}</h2>
+      <p>Elige una opción del menú para consultar, crear, editar o eliminar registros.</p>
+    </section>
+
+    <section id="vista" hidden>
+      <div class="vista-cabecera">
+        <h2 id="titulo"></h2>
+        <button class="btn rojo" id="btnNuevo">Nuevo registro</button>
+      </div>
+      <div id="mensaje" class="mensaje" role="status"></div>
+      <div class="tabla-scroll">
+        <table>
+          <thead id="cabecera"></thead>
+          <tbody id="cuerpo"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dlg">
+    <form id="formDlg">
+      <h3 id="dlgTitulo"></h3>
+      <div class="campos" id="campos"></div>
+      <p class="error-dlg" id="dlgError" role="alert"></p>
+      <div class="acciones">
+        <button type="button" class="btn claro" id="btnCancelar">Cancelar</button>
+        <button type="submit" class="btn rojo" id="btnGuardar">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="{{ url_for('static', filename='js/panel.js') }}"></script>
+</body>
+</html>
+
