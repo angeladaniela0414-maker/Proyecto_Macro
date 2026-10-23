@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CALMHOR · Iniciar sesión</title>
+  <link rel="stylesheet" href="./base(2).css">
+  <link rel="stylesheet" href="./login(6).css">
+</head>
+<body class="pagina-login">
+  <main class="login-tarjeta">
+    <h1>Iniciar sesión</h1>
+    <div class="alerta-login" id="errorLogin" role="alert" hidden></div>
+    <form id="formLogin">
+      <div class="campo-login">
+        <input type="text" name="correo" placeholder="Correo institucional" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus aria-label="Correo institucional">
+      </div>
+      <div class="campo-login">
+        <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" autocomplete="current-password" required aria-label="Contraseña" style="padding-right:78px">
+        <button type="button" class="ver-clave" id="verClave" aria-label="Mostrar contraseña">Mostrar</button>
+      </div>
+      <div class="opciones-login">
+        <label><input type="checkbox" name="recordar"> Recordarme</label>
+        <a href="#" id="abrirAyuda">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button type="submit" class="btn-login">Ingresar</button>
+    </form>
+    <p class="pie-login">Horarios · ULEAM</p>
+  </main>
+
+  <div class="modal-vidrio" id="modalAyuda" hidden>
+    <div class="caja" role="dialog" aria-modal="true" aria-labelledby="tituloAyuda">
+      <h2 id="tituloAyuda">Recuperar la contraseña</h2>
+      <p>Pide a Gestión Académica que restablezca tu contraseña.</p>
+      <div class="acciones-login"><button type="button" class="btn-login" data-cerrar>Entendido</button></div>
+    </div>
+  </div>
+
+<script src="/static/js/login.js" defer></script>
+</body>
+</html>
